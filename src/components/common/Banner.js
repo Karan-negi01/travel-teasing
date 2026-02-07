@@ -26,7 +26,7 @@ export default function Banner() {
   }, []);
 
   return (
-    <section className="relative min-h-[55vh] sm:min-h-[62vh] lg:min-h-[68vh] flex flex-col justify-center overflow-hidden">
+    <section className="relative min-h-[62vh] sm:min-h-[70vh] lg:min-h-[75vh] flex flex-col justify-center overflow-hidden">
       {/* Carousel background */}
       <div className="absolute inset-0">
         {CAROUSEL_SLIDES.map((src, i) => (
