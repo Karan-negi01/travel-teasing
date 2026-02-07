@@ -13,6 +13,9 @@
 # testing
 /coverage
 
+# large assets (use CDN or deploy separately)
+public/homevideo.mp4
+
 # next.js
 /.next/
 /out/
