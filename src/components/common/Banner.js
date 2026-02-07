@@ -4,13 +4,14 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 
-// High-quality landscape / mountains / hills hero images
+// Hilly / mountain landscape hero images only
 const CAROUSEL_SLIDES = [
-  "https://images.unsplash.com/photo-1682687220742-aba13b6e50ba?q=80&w=2070&auto=format&fit=crop", // snow mountains
-  "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=2070&auto=format&fit=crop", // green valley
-  "https://images.unsplash.com/photo-1469474968028-56623f02e42e?q=80&w=2070&auto=format&fit=crop", // hills mist
-  "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=2070&auto=format&fit=crop", // alpine peaks
-  "https://images.unsplash.com/photo-1472214103451-9374bd1c798e?q=80&w=2070&auto=format&fit=crop", // mountain landscape
+  "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=2070&auto=format&fit=crop", // mountain valley green
+  "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=2070&auto=format&fit=crop", // snow-capped peaks
+  "https://images.unsplash.com/photo-1519904981063-b0cf448d479e?q=80&w=2070&auto=format&fit=crop", // rolling hills
+  "https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?q=80&w=2070&auto=format&fit=crop", // misty mountains
+  "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?q=80&w=2070&auto=format&fit=crop", // hills lake landscape
+  "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=80&w=2070&auto=format&fit=crop", // forest hills
 ];
 
 const CAROUSEL_INTERVAL_MS = 5500;
@@ -26,7 +27,7 @@ export default function Banner() {
   }, []);
 
   return (
-    <section className="relative min-h-[68vh] sm:min-h-[76vh] lg:min-h-[82vh] flex flex-col justify-center overflow-hidden">
+    <section className="relative min-h-[85vh] sm:min-h-[90vh] lg:min-h-[95vh] flex flex-col justify-center overflow-hidden">
       {/* Carousel background — smooth crossfade + subtle zoom */}
       <div className="absolute inset-0">
         {CAROUSEL_SLIDES.map((src, i) => (
