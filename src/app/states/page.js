@@ -84,7 +84,7 @@ export default function StatesPage() {
           <h2 className="mt-2 text-3xl md:text-4xl font-bold text-gray-900 tracking-tight">Ways to explore</h2>
           <div className="mt-2 h-0.5 w-12 rounded-full bg-orange-400 mx-auto" />
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-20">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-5 mb-20">
           {themes.map((theme) => (
             <div
               key={theme.title}
@@ -105,7 +105,7 @@ export default function StatesPage() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mb-20">
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-5 mb-20">
           {popularStates.map((state, index) => (
             <Link
               key={state.id}
@@ -140,7 +140,7 @@ export default function StatesPage() {
           <div className="mt-2 h-0.5 w-12 rounded-full bg-orange-400 mx-auto" />
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-5">
           {states.map((state, index) => (
             <Link
               key={state.id}

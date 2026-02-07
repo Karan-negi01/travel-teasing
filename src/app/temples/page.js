@@ -280,7 +280,7 @@ export default function TemplesPage() {
               Timeless routes to follow, from Char Dham to Shaktipeeth.
             </p>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {featuredCircuits.map((item, index) => (
               <Link
                 key={item.title}
@@ -326,7 +326,7 @@ export default function TemplesPage() {
             </p>
             <p className="text-xl md:text-2xl font-bold text-orange-500/90 tabular-nums mt-2">{allTemples.length}+</p>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5">
+          <div className="grid grid-cols-2 sm:grid-cols-2 xl:grid-cols-3 gap-5">
             {allTemples.map((temple, index) => (
               <Link
                 key={temple.id}

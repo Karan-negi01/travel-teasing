@@ -32,7 +32,7 @@ export default function StaysAndActivities({ title, location, tone = "orange", s
         <h3 className="text-lg font-bold text-gray-900 mb-1">Hotels & stays near {title}</h3>
         <p className="text-gray-600 text-sm mb-5">Curated stays in {location}. Click to open booking.</p>
         {stays.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
             {stays.map((stay) => (
               <div
                 key={stay.id}
@@ -84,7 +84,7 @@ export default function StaysAndActivities({ title, location, tone = "orange", s
       <div className="mb-12">
         <h3 className="text-lg font-bold text-gray-900 mb-1">Activities & experiences</h3>
         <p className="text-gray-600 text-sm mb-5">Guided visits and local tours.</p>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-2 gap-3 sm:gap-4">
           <button
             type="button"
             onClick={() => openBooking({ type: "activities", destination: title, location })}

@@ -130,7 +130,7 @@ export default function OffbeatPage() {
               Quiet villages, high valleys, and story-rich escapes.
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
             {featuredPlaces.map((place, index) => (
               <Link
                 key={place.id}
@@ -178,7 +178,7 @@ export default function OffbeatPage() {
           </p>
           <p className="text-xl md:text-2xl font-bold text-violet-500/90 tabular-nums mt-2">{offbeatPlaces.length}+</p>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5">
+        <div className="grid grid-cols-2 sm:grid-cols-2 xl:grid-cols-3 gap-5">
           {offbeatPlaces.map((place, index) => (
             <Link
               key={place.id}

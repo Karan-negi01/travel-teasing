@@ -134,7 +134,7 @@ function SearchContent() {
                 ))}
               </div>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
               <Link
                 href="/temples"
                 className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm hover:border-orange-200 hover:shadow-md transition-all"
@@ -206,7 +206,7 @@ function SearchContent() {
                 <h2 className="text-2xl font-bold text-gray-900 mb-6">
                   Temples ({results.temples.length})
                 </h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {results.temples.map((temple, index) => (
                     <Link
                       key={temple.id}
@@ -244,7 +244,7 @@ function SearchContent() {
                 <h2 className="text-2xl font-bold text-gray-900 mb-6">
                   Treks ({results.treks.length})
                 </h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {results.treks.map((trek, index) => (
                     <Link
                       key={trek.id}
@@ -282,7 +282,7 @@ function SearchContent() {
                 <h2 className="text-2xl font-bold text-gray-900 mb-6">
                   Off-beat Places ({results.offbeat.length})
                 </h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {results.offbeat.map((place, index) => (
                     <Link
                       key={place.id}

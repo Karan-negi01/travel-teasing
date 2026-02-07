@@ -27,7 +27,7 @@ export default function CharDhamSection() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+        <div className="grid grid-cols-2 md:grid-cols-2 gap-6 sm:gap-8">
           {charDham.map((dham) => (
             <Link
               key={dham.id}

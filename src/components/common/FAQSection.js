@@ -23,7 +23,7 @@ export default function FAQSection() {
             Questions, answered
           </h3>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
           {faqs.map((item) => (
             <div
               key={item.q}

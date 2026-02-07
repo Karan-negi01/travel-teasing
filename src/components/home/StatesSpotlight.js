@@ -23,7 +23,7 @@ export default function StatesSpotlight() {
           <div className="mt-2 h-0.5 w-12 rounded-full bg-orange-400 mx-auto" />
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {featured.map((state, index) => (
             <Link
               key={state.id}

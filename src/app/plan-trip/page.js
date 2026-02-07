@@ -207,7 +207,7 @@ export default function PlanTripPage() {
               From idea to itinerary in four steps.
             </p>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
             {steps.map((item) => {
               const Icon = item.icon;
               const Wrapper = item.href ? Link : "div";
@@ -260,7 +260,7 @@ export default function PlanTripPage() {
               Pick a theme or mix temples, treks, and off-beat in one trip.
             </p>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
             {focusCards.map((card) => {
               const Icon = card.icon;
               const accentBg = {
@@ -316,7 +316,7 @@ export default function PlanTripPage() {
               Jump in with a popular circuit or explore by category. Each link takes you to a curated list you can build from.
             </p>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 sm:gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-2 xl:grid-cols-4 gap-4 sm:gap-6">
             {quickStart.map((item) => (
               <Link
                 key={item.title}
@@ -395,7 +395,7 @@ export default function PlanTripPage() {
               Stays and transport in one place. Open the booking flow when you’re ready.
             </p>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-3 sm:gap-4 max-w-4xl mx-auto">
+          <div className="grid grid-cols-2 sm:grid-cols-2 xl:grid-cols-4 gap-3 sm:gap-4 max-w-4xl mx-auto">
             <button
               type="button"
               onClick={() => openBooking({ type: "stays" })}
