@@ -4,16 +4,16 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 
-// Landscape / hilly / Himalayan-style hero images
+// High-quality landscape / mountains / hills hero images
 const CAROUSEL_SLIDES = [
-  "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=2070&auto=format&fit=crop", // mountains valley
-  "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=2070&auto=format&fit=crop", // snow peaks
-  "https://images.unsplash.com/photo-1519904981063-b0cf448d479e?q=80&w=2070&auto=format&fit=crop", // green hills
-  "https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?q=80&w=2070&auto=format&fit=crop", // misty hills
-  "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?q=80&w=2070&auto=format&fit=crop", // mountain lake
+  "https://images.unsplash.com/photo-1682687220742-aba13b6e50ba?q=80&w=2070&auto=format&fit=crop", // snow mountains
+  "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=2070&auto=format&fit=crop", // green valley
+  "https://images.unsplash.com/photo-1469474968028-56623f02e42e?q=80&w=2070&auto=format&fit=crop", // hills mist
+  "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=2070&auto=format&fit=crop", // alpine peaks
+  "https://images.unsplash.com/photo-1472214103451-9374bd1c798e?q=80&w=2070&auto=format&fit=crop", // mountain landscape
 ];
 
-const CAROUSEL_INTERVAL_MS = 5000;
+const CAROUSEL_INTERVAL_MS = 5500;
 
 export default function Banner() {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -26,14 +26,16 @@ export default function Banner() {
   }, []);
 
   return (
-    <section className="relative min-h-[62vh] sm:min-h-[70vh] lg:min-h-[75vh] flex flex-col justify-center overflow-hidden">
-      {/* Carousel background */}
+    <section className="relative min-h-[68vh] sm:min-h-[76vh] lg:min-h-[82vh] flex flex-col justify-center overflow-hidden">
+      {/* Carousel background — smooth crossfade + subtle zoom */}
       <div className="absolute inset-0">
         {CAROUSEL_SLIDES.map((src, i) => (
           <div
             key={src}
-            className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${
-              i === currentSlide ? "opacity-100 z-0" : "opacity-0 z-0"
+            className={`absolute inset-0 z-0 transition-all duration-[1200ms] ease-out ${
+              i === currentSlide
+                ? "opacity-100 scale-100"
+                : "opacity-0 scale-105 pointer-events-none"
             }`}
             aria-hidden={i !== currentSlide}
           >
