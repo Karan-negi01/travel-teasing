@@ -27,7 +27,7 @@ export default function Banner() {
   }, []);
 
   return (
-    <section className="relative min-h-[85vh] sm:min-h-[90vh] lg:min-h-[87vh] flex flex-col justify-center overflow-hidden">
+    <section className="relative min-h-[85vh] sm:min-h-[90vh] lg:min-h-[88vh] flex flex-col justify-center overflow-hidden">
       {/* Carousel background — smooth crossfade + subtle zoom */}
       <div className="absolute inset-0">
         {CAROUSEL_SLIDES.map((src, i) => (
