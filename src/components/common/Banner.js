@@ -1,114 +1,108 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 
-// Fallback when video is missing (video is in .gitignore; add public/homevideo.mp4 locally or host on CDN)
-const FALLBACK_IMAGE = "https://images.unsplash.com/photo-1488646953014-85cb44e25828?q=80&w=2070&auto=format&fit=crop";
+const CAROUSEL_SLIDES = [
+  "https://images.unsplash.com/photo-1488646953014-85cb44e25828?q=80&w=2070&auto=format&fit=crop",
+  "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?q=80&w=2071&auto=format&fit=crop",
+  "https://images.unsplash.com/photo-1482192596544-9eb780fc7f66?q=80&w=2070&auto=format&fit=crop",
+  "https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=2070&auto=format&fit=crop",
+];
+
+const CAROUSEL_INTERVAL_MS = 5000;
 
 export default function Banner() {
-  const [videoFailed, setVideoFailed] = useState(false);
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  useEffect(() => {
+    const t = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % CAROUSEL_SLIDES.length);
+    }, CAROUSEL_INTERVAL_MS);
+    return () => clearInterval(t);
+  }, []);
 
   return (
-    <section className="relative min-h-[70vh] sm:min-h-[80vh] lg:min-h-[90vh] max-h-[100vh] overflow-hidden">
+    <section className="relative min-h-[45vh] sm:min-h-[52vh] lg:min-h-[58vh] flex flex-col justify-center overflow-hidden">
+      {/* Carousel background */}
       <div className="absolute inset-0">
-        {!videoFailed ? (
-          <video
-            className="h-full w-full object-cover"
-            autoPlay
-            muted
-            loop
-            playsInline
-            poster={FALLBACK_IMAGE}
-            onError={() => setVideoFailed(true)}
+        {CAROUSEL_SLIDES.map((src, i) => (
+          <div
+            key={src}
+            className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${
+              i === currentSlide ? "opacity-100 z-0" : "opacity-0 z-0"
+            }`}
+            aria-hidden={i !== currentSlide}
           >
-            <source src="/homevideo.mp4" type="video/mp4" />
-          </video>
-        ) : (
-          <img
-            src={FALLBACK_IMAGE}
-            alt="Travel India"
-            className="h-full w-full object-cover"
-          />
-        )}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-black/10" />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-transparent" />
+            <img
+              src={src}
+              alt=""
+              className="h-full w-full object-cover"
+            />
+          </div>
+        ))}
+        <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/60 to-black/30 z-[1]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_80%_at_20%_50%,_rgba(249,115,22,0.08),_transparent)] z-[1]" />
       </div>
 
-      <div className="relative z-10 h-full flex items-center justify-center">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-          <div className="text-center text-white space-y-4 sm:space-y-7">
-            <span className="inline-flex items-center rounded-full bg-white/15 px-3 sm:px-4 py-1.5 sm:py-2 text-[10px] sm:text-xs font-semibold tracking-wide">
+      {/* Content — left-aligned like temple page */}
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-14 sm:py-16 lg:py-20">
+        <div className="max-w-2xl">
+          <div className="flex items-center gap-3 text-white/70 flex-wrap">
+            <span className="h-px w-8 bg-orange-400" />
+            <span className="text-[10px] sm:text-xs font-semibold uppercase tracking-[0.2em] sm:tracking-[0.25em]">
               TravelTeasing · India travel
             </span>
-            <div className="space-y-2 sm:space-y-3">
-              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold leading-tight px-1">
-                Find your next{" "}
-                <span className="bg-gradient-to-r from-orange-300 via-pink-300 to-yellow-200 bg-clip-text text-transparent">
-                  temple, trek
-                </span>{" "}
-                or hidden stay.
-              </h1>
-              <p className="text-xs sm:text-sm md:text-base text-white/90 max-w-2xl mx-auto px-2">
-                Clean, simple planning for Char Dham routes, Himalayan treks, and
-                off-beat escapes — without noisy clutter.
-              </p>
-            </div>
-
-            <div className="bg-white/95 backdrop-blur rounded-2xl sm:rounded-full px-3 py-2 shadow-xl max-w-2xl mx-2 sm:mx-auto border border-white/60">
-              <form
-                onSubmit={(e) => e.preventDefault()}
-                className="flex flex-col sm:flex-row sm:items-center gap-2"
-              >
-                <div className="flex-1 px-3 py-2 rounded-full hover:bg-gray-50 transition text-left">
-                  <p className="text-[11px] uppercase tracking-wide text-gray-500">
-                    Where
-                  </p>
-                  <p className="text-sm font-semibold text-gray-900">
-                    Search temples, treks, places...
-                  </p>
-                </div>
-                <div className="hidden sm:block h-8 w-px bg-gray-200" />
-                <div className="flex-1 px-3 py-2 rounded-full hover:bg-gray-50 transition text-left">
-                  <p className="text-[11px] uppercase tracking-wide text-gray-500">
-                    When
-                  </p>
-                  <p className="text-sm font-semibold text-gray-900">
-                    Any month
-                  </p>
-                </div>
-                <button
-                  type="submit"
-                  className="ml-auto flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-r from-orange-500 to-pink-500 text-white"
-                >
-                  <MagnifyingGlassIcon className="h-4 w-4" />
-                </button>
-              </form>
-            </div>
-
-            <div className="flex flex-wrap justify-center gap-2 sm:gap-3 pt-1 text-white/85">
-              <Link
-                href="/temples"
-                className="rounded-full bg-white text-gray-900 px-4 sm:px-5 py-2 sm:py-2.5 text-xs sm:text-sm font-semibold hover:shadow min-h-[44px] flex items-center justify-center"
-              >
-                Explore Temples
-              </Link>
-              <Link
-                href="/treks"
-                className="rounded-full bg-white/10 border border-white/40 px-4 sm:px-5 py-2 sm:py-2.5 text-xs sm:text-sm font-semibold text-white hover:bg-white/15 min-h-[44px] flex items-center justify-center"
-              >
-                Explore Treks
-              </Link>
-              <Link
-                href="/offbeat"
-                className="rounded-full bg-white/10 border border-white/40 px-4 sm:px-5 py-2 sm:py-2.5 text-xs sm:text-sm font-semibold text-white hover:bg-white/15 min-h-[44px] flex items-center justify-center"
-              >
-                Off-beat stays
-              </Link>
-            </div>
+          </div>
+          <h1 className="mt-4 sm:mt-6 text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-tight leading-[1.1]">
+            <span className="text-white/95">Find your next</span>
+            <br />
+            <span className="bg-gradient-to-r from-white to-white/90 bg-clip-text text-transparent">
+              temple, trek or hidden stay
+            </span>
+          </h1>
+          <p className="mt-4 sm:mt-6 text-sm sm:text-base md:text-lg text-white/80 max-w-lg leading-relaxed">
+            Clean, simple planning for Char Dham routes, Himalayan treks, and off-beat escapes — without noisy clutter.
+          </p>
+          <div className="mt-6 sm:mt-8 flex flex-wrap gap-2 sm:gap-3">
+            <Link
+              href="/temples"
+              className="inline-flex items-center justify-center gap-2 rounded-lg bg-orange-500 px-4 sm:px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-orange-500/25 hover:bg-orange-600 transition-all min-h-[44px]"
+            >
+              Explore temples
+              <span className="text-orange-200">→</span>
+            </Link>
+            <Link
+              href="/search"
+              className="inline-flex items-center justify-center rounded-lg border border-white/50 bg-white/5 px-4 sm:px-5 py-2.5 text-sm font-semibold text-white backdrop-blur-sm hover:bg-white/10 transition-all min-h-[44px]"
+            >
+              Search all
+            </Link>
+          </div>
+          <div className="mt-6 sm:mt-10 flex flex-wrap gap-2 sm:gap-4 text-[10px] sm:text-xs font-medium text-white/60 uppercase tracking-wider">
+            <span>Char Dham</span>
+            <span>·</span>
+            <span>Treks</span>
+            <span>·</span>
+            <span>Off-beat</span>
           </div>
         </div>
+      </div>
+
+      {/* Carousel dots */}
+      <div className="absolute bottom-4 left-4 sm:left-8 z-10 flex gap-2">
+        {CAROUSEL_SLIDES.map((_, i) => (
+          <button
+            key={i}
+            type="button"
+            onClick={() => setCurrentSlide(i)}
+            className={`h-1.5 rounded-full transition-all duration-300 ${
+              i === currentSlide ? "w-6 bg-orange-400" : "w-1.5 bg-white/50 hover:bg-white/70"
+            }`}
+            aria-label={`Go to slide ${i + 1}`}
+          />
+        ))}
       </div>
     </section>
   );
