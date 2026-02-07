@@ -1,5 +1,6 @@
 "use client";
 
+import { Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
 import Navbar from "@/components/common/Navbar";
@@ -12,7 +13,7 @@ import { allTemples } from "@/data/temples";
 import { treks } from "@/data/treks";
 import { offbeatPlaces } from "@/data/offbeat";
 
-export default function SearchPage() {
+function SearchContent() {
   const searchParams = useSearchParams();
   const query = searchParams.get("q") || "";
   const [results, setResults] = useState({ temples: [], treks: [], offbeat: [] });
@@ -320,5 +321,29 @@ export default function SearchPage() {
       <FAQSection />
       <Footer />
     </div>
+  );
+}
+
+function SearchFallback() {
+  return (
+    <div className="min-h-screen bg-gray-50">
+      <Navbar />
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="animate-pulse space-y-4">
+          <div className="h-8 w-48 bg-gray-200 rounded" />
+          <div className="h-6 w-full max-w-xl bg-gray-100 rounded" />
+          <div className="h-32 w-full bg-gray-100 rounded-2xl mt-8" />
+        </div>
+      </div>
+      <Footer />
+    </div>
+  );
+}
+
+export default function SearchPage() {
+  return (
+    <Suspense fallback={<SearchFallback />}>
+      <SearchContent />
+    </Suspense>
   );
 }
