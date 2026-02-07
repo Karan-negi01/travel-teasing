@@ -4,11 +4,13 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 
+// Landscape / hilly / Himalayan-style hero images
 const CAROUSEL_SLIDES = [
-  "https://images.unsplash.com/photo-1488646953014-85cb44e25828?q=80&w=2070&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?q=80&w=2071&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1482192596544-9eb780fc7f66?q=80&w=2070&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=2070&auto=format&fit=crop",
+  "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=2070&auto=format&fit=crop", // mountains valley
+  "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=2070&auto=format&fit=crop", // snow peaks
+  "https://images.unsplash.com/photo-1519904981063-b0cf448d479e?q=80&w=2070&auto=format&fit=crop", // green hills
+  "https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?q=80&w=2070&auto=format&fit=crop", // misty hills
+  "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?q=80&w=2070&auto=format&fit=crop", // mountain lake
 ];
 
 const CAROUSEL_INTERVAL_MS = 5000;
@@ -24,7 +26,7 @@ export default function Banner() {
   }, []);
 
   return (
-    <section className="relative min-h-[45vh] sm:min-h-[52vh] lg:min-h-[58vh] flex flex-col justify-center overflow-hidden">
+    <section className="relative min-h-[55vh] sm:min-h-[62vh] lg:min-h-[68vh] flex flex-col justify-center overflow-hidden">
       {/* Carousel background */}
       <div className="absolute inset-0">
         {CAROUSEL_SLIDES.map((src, i) => (
