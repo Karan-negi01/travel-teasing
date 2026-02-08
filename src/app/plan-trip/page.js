@@ -395,7 +395,7 @@ export default function PlanTripPage() {
               Stays and transport in one place. Open the booking flow when you’re ready.
             </p>
           </div>
-          <div className="grid grid-cols-2 sm:grid-cols-2 xl:grid-cols-4 gap-3 sm:gap-4 max-w-4xl mx-auto">
+          <div className="grid grid-cols-2 sm:grid-cols-2 xl:grid-cols-4 gap-4 sm:gap-6 max-w-4xl mx-auto">
             <button
               type="button"
               onClick={() => openBooking({ type: "stays" })}

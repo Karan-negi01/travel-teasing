@@ -106,7 +106,7 @@ export default async function CityDetailPage({ params }) {
           </p>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-2 gap-6 mb-8">
+        <div className="grid grid-cols-2 md:grid-cols-2 gap-4 sm:gap-6 mb-8">
           <div className="bg-white rounded-2xl border border-gray-200 p-6">
             <h3 className="text-xl font-bold text-gray-900 mb-3">Why visit</h3>
             <p className="text-gray-700">
@@ -129,7 +129,7 @@ export default async function CityDetailPage({ params }) {
                 <h2 className="text-2xl font-bold text-gray-900 mb-6">
                   Temples in {city.name}
                 </h2>
-                <div className="grid grid-cols-2 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-2 md:grid-cols-2 gap-4 sm:gap-6">
                   {cityTemples.map((temple, index) => (
                     <Link
                       key={temple.id}
@@ -163,7 +163,7 @@ export default async function CityDetailPage({ params }) {
                 <h2 className="text-2xl font-bold text-gray-900 mb-6">
                   Treks near {city.name}
                 </h2>
-                <div className="grid grid-cols-2 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-2 md:grid-cols-2 gap-4 sm:gap-6">
                   {cityTreks.map((trek, index) => (
                     <Link
                       key={trek.id}
@@ -197,7 +197,7 @@ export default async function CityDetailPage({ params }) {
                 <h2 className="text-2xl font-bold text-gray-900 mb-6">
                   Off-beat places in {city.name}
                 </h2>
-                <div className="grid grid-cols-2 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-2 md:grid-cols-2 gap-4 sm:gap-6">
                   {cityOffbeat.map((place, index) => (
                     <Link
                       key={place.id}
@@ -233,7 +233,7 @@ export default async function CityDetailPage({ params }) {
             <h2 className="text-2xl font-bold text-gray-900 mb-6">
               More cities in {state?.name}
             </h2>
-            <div className="grid grid-cols-2 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-2 md:grid-cols-2 gap-4 sm:gap-6">
               {relatedCities.map((item, index) => (
                 <Link
                   key={item.id}

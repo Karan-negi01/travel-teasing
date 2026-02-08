@@ -89,7 +89,7 @@ export default async function OffbeatDetailPage({ params }) {
               <h2 className="mt-2 text-2xl font-bold text-gray-900 tracking-tight">At a glance</h2>
               <div className="mt-2 h-0.5 w-10 rounded-full bg-violet-400 mb-6" />
               <div className="rounded-2xl border border-gray-200/80 bg-white p-6 shadow-sm">
-                <div className="grid grid-cols-2 sm:grid-cols-2 gap-6">
+                <div className="grid grid-cols-2 sm:grid-cols-2 gap-4 sm:gap-6">
                   <div>
                     <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Best time</p>
                     <p className="mt-1 text-gray-900">{place.bestTime}</p>
@@ -158,7 +158,7 @@ export default async function OffbeatDetailPage({ params }) {
                 <h2 className="mt-2 text-2xl font-bold text-gray-900 tracking-tight">Things to do</h2>
                 <div className="mt-2 h-0.5 w-10 rounded-full bg-violet-400 mb-6" />
                 <div className="rounded-2xl border border-gray-200/80 bg-white p-6 shadow-sm">
-                  <div className="grid grid-cols-2 md:grid-cols-2 gap-3">
+                  <div className="grid grid-cols-2 md:grid-cols-2 gap-4 sm:gap-6">
                     {place.activities.map((a, i) => (
                       <div key={i} className="flex items-center gap-3 rounded-lg bg-gray-50 px-4 py-3 text-gray-700 text-sm">
                         <span className="text-violet-500">·</span>
@@ -212,7 +212,7 @@ export default async function OffbeatDetailPage({ params }) {
                 <p className="text-xs font-semibold text-violet-600 uppercase tracking-[0.2em]">Good to know</p>
                 <h2 className="mt-2 text-2xl font-bold text-gray-900 tracking-tight">Notes & permits</h2>
                 <div className="mt-2 h-0.5 w-10 rounded-full bg-violet-400 mb-6" />
-                <div className="grid grid-cols-2 md:grid-cols-2 gap-5">
+                <div className="grid grid-cols-2 md:grid-cols-2 gap-4 sm:gap-6">
                   {place.culturalNotes && (
                     <div className="rounded-2xl border border-amber-200 bg-amber-50/50 p-6 shadow-sm">
                       <h3 className="text-lg font-bold text-gray-900 mb-2 flex items-center gap-2">

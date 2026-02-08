@@ -83,7 +83,7 @@ export default function CitiesPage() {
           <h2 className="mt-2 text-3xl md:text-4xl font-bold text-gray-900 tracking-tight">Ways to explore</h2>
           <div className="mt-2 h-0.5 w-12 rounded-full bg-orange-400 mx-auto" />
         </div>
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-5 mb-20">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 mb-20">
           {cityStyles.map((style) => (
             <div
               key={style.title}
@@ -104,7 +104,7 @@ export default function CitiesPage() {
           </p>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
           {allCities.map((city, index) => {
             const state = getStateById(city.stateId);
             return (

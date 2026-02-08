@@ -97,7 +97,7 @@ export default async function TrekDetailPage({ params }) {
               <h2 className="mt-2 text-2xl font-bold text-gray-900 tracking-tight">At a glance</h2>
               <div className="mt-2 h-0.5 w-10 rounded-full bg-emerald-400 mb-6" />
               <div className="rounded-2xl border border-gray-200/80 bg-white p-6 shadow-sm">
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
                   <div>
                     <p className="text-2xl font-bold text-emerald-600 tabular-nums">{trek.duration}</p>
                     <p className="text-xs text-gray-500 mt-1">Duration</p>
@@ -177,7 +177,7 @@ export default async function TrekDetailPage({ params }) {
                 <h2 className="mt-2 text-2xl font-bold text-gray-900 tracking-tight">Essential gear</h2>
                 <div className="mt-2 h-0.5 w-10 rounded-full bg-emerald-400 mb-6" />
                 <div className="rounded-2xl border border-gray-200/80 bg-white p-6 shadow-sm">
-                  <div className="grid grid-cols-2 md:grid-cols-2 gap-2">
+                  <div className="grid grid-cols-2 md:grid-cols-2 gap-4 sm:gap-6">
                     {trek.gearRequired.map((g, i) => (
                       <div key={i} className="flex items-center text-gray-700 text-sm">
                         <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-2.5 flex-shrink-0" />
@@ -194,7 +194,7 @@ export default async function TrekDetailPage({ params }) {
               <p className="text-xs font-semibold text-emerald-600 uppercase tracking-[0.2em]">Important</p>
               <h2 className="mt-2 text-2xl font-bold text-gray-900 tracking-tight">Permits & safety</h2>
               <div className="mt-2 h-0.5 w-10 rounded-full bg-emerald-400 mb-6" />
-              <div className="grid grid-cols-2 md:grid-cols-2 gap-5">
+              <div className="grid grid-cols-2 md:grid-cols-2 gap-4 sm:gap-6">
                 <div className="rounded-2xl border border-gray-200/80 bg-white p-6 shadow-sm">
                   <h3 className="text-lg font-bold text-gray-900 mb-2">Permits</h3>
                   <p className="text-gray-700 text-sm leading-relaxed">{trek.permits}</p>

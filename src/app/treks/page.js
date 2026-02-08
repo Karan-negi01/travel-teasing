@@ -123,7 +123,7 @@ export default function TreksPage() {
             From beginner-friendly trails to expert expeditions.
           </p>
         </div>
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-5">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 sm:gap-4 sm:gap-6">
           <div className="rounded-2xl border border-gray-200/80 bg-white p-6 shadow-sm hover:border-emerald-200/60 hover:shadow-md transition-all">
             <p className="text-sm font-semibold text-gray-500">Easy</p>
             <p className="mt-1 text-xs font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full w-fit">Beginner</p>
@@ -156,7 +156,7 @@ export default function TreksPage() {
               Handpicked routes with the best weather windows.
             </p>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
             {featuredTreks.map((trek, index) => (
               <Link
                 key={trek.id}
@@ -202,7 +202,7 @@ export default function TreksPage() {
           </p>
           <p className="text-xl md:text-2xl font-bold text-emerald-500/90 tabular-nums mt-2">{treks.length}+</p>
         </div>
-        <div className="grid grid-cols-2 sm:grid-cols-2 xl:grid-cols-3 gap-5">
+        <div className="grid grid-cols-2 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-4 sm:gap-6">
           {treks.map((trek, index) => (
             <Link
               key={trek.id}

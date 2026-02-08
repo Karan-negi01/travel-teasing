@@ -99,7 +99,7 @@ export default async function StateDetailPage({ params }) {
             <h2 className="text-2xl font-bold text-gray-900 mb-6">
               Cities in {state.name}
             </h2>
-            <div className="grid grid-cols-2 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-2 md:grid-cols-2 gap-4 sm:gap-6">
               {stateCities.map((city, index) => (
                 <Link
                   key={city.id}

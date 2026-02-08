@@ -36,7 +36,7 @@ export default function FeaturedCollections() {
           <div className="mt-2 h-0.5 w-12 rounded-full bg-orange-400 mx-auto" />
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
           {collections.map((item) => (
             <Link
               key={item.title}

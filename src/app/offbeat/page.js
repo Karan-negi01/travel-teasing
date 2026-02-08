@@ -99,7 +99,7 @@ export default function OffbeatPage() {
 
       {/* Stats */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-5">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-4 sm:gap-6">
           <div className="rounded-2xl border border-gray-200/80 bg-white p-5 shadow-sm text-center hover:border-violet-200/60 hover:shadow-md transition-all">
             <p className="text-2xl font-bold text-violet-600 tabular-nums">{offbeatPlaces.length}+</p>
             <p className="text-sm text-gray-600 mt-1">Hidden destinations</p>
@@ -130,7 +130,7 @@ export default function OffbeatPage() {
               Quiet villages, high valleys, and story-rich escapes.
             </p>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
             {featuredPlaces.map((place, index) => (
               <Link
                 key={place.id}
@@ -176,7 +176,7 @@ export default function OffbeatPage() {
           </p>
           <p className="text-xl md:text-2xl font-bold text-violet-500/90 tabular-nums mt-2">{offbeatPlaces.length}+</p>
         </div>
-        <div className="grid grid-cols-2 sm:grid-cols-2 xl:grid-cols-3 gap-5">
+        <div className="grid grid-cols-2 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-4 sm:gap-6">
           {offbeatPlaces.map((place, index) => (
             <Link
               key={place.id}
