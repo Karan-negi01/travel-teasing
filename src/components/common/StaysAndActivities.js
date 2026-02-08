@@ -38,23 +38,27 @@ export default function StaysAndActivities({ title, location, tone = "orange", s
                 key={stay.id}
                 className="group rounded-2xl border border-gray-200/80 bg-white overflow-hidden shadow-sm hover:shadow-lg hover:border-gray-300 transition-all duration-300"
               >
-                <div className="relative aspect-[4/3] overflow-hidden">
+                <div className="relative h-56 sm:h-auto sm:aspect-[4/3] overflow-hidden">
                   <img
                     src={stay.image}
                     alt={stay.name}
                     className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
-                  <div className="absolute top-2 right-2 rounded-full bg-white/95 px-2 py-1 text-xs font-semibold text-gray-800 shadow-sm">
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+                  <div className="absolute top-3 left-3 rounded-full bg-white/90 px-2.5 py-1 text-xs font-semibold text-gray-900">
                     {stay.rating} ★
                   </div>
-                  <div className="absolute bottom-2 left-2 right-2 text-white text-xs font-medium drop-shadow-md">
-                    {stay.type}
+                  <div className="absolute bottom-3 left-3 right-3 text-white">
+                    <p className="text-sm font-semibold drop-shadow">{stay.name}</p>
+                    <p className="text-xs text-white/90">{stay.type}</p>
                   </div>
                 </div>
-                <div className="p-4">
-                  <h4 className="font-bold text-gray-900">{stay.name}</h4>
-                  <p className="text-xs text-gray-500 mt-0.5">{stay.city}, {stay.state}</p>
-                  <p className="text-sm font-semibold text-gray-700 mt-2">{stay.priceRange} / night</p>
+                <div className="p-4 space-y-2">
+                  <p className="text-sm text-gray-600 line-clamp-2">{stay.city}, {stay.state}</p>
+                  <div className="flex items-center justify-between text-xs text-gray-600">
+                    <span>{stay.priceRange} / night</span>
+                    <span className={`rounded-full px-2.5 py-1 font-semibold ${tone === "orange" ? "bg-orange-50 text-orange-700" : tone === "emerald" ? "bg-emerald-50 text-emerald-700" : "bg-violet-50 text-violet-700"}`}>Stay</span>
+                  </div>
                   <button
                     type="button"
                     onClick={() => openBooking({ type: "stays", stay, location: `${stay.city}, ${stay.state}` })}

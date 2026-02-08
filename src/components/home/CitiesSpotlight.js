@@ -32,19 +32,19 @@ export default function CitiesSpotlight() {
                 href={`/cities/${city.id}`}
                 className="group rounded-2xl overflow-hidden border border-gray-200 bg-white hover:shadow-xl transition-all"
               >
-                <div className="relative h-44">
+                <div className="relative h-56 sm:h-auto sm:aspect-[4/3] overflow-hidden">
                   <img
                     src={imagePool[index % imagePool.length]}
                     alt={city.name}
                     className="h-full w-full object-cover group-hover:scale-[1.03] transition-transform duration-500"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
                   <div className="absolute bottom-3 left-3 right-3 text-white">
-                    <p className="text-lg font-semibold">{city.name}</p>
-                    <p className="text-xs text-white/85">{state?.name}</p>
+                    <p className="text-sm font-semibold drop-shadow">{city.name}</p>
+                    <p className="text-xs text-white/90">{state?.name}</p>
                   </div>
                 </div>
-                <div className="p-4">
+                <div className="p-4 space-y-2">
                   <p className="text-sm text-gray-600">
                     Curated routes, stays, and local tips.
                   </p>

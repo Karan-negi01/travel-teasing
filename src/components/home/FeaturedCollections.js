@@ -41,7 +41,7 @@ export default function FeaturedCollections() {
             <Link
               key={item.title}
               href={item.href}
-              className="group relative h-56 overflow-hidden rounded-2xl"
+              className="group relative h-56 overflow-hidden rounded-2xl border border-gray-200 bg-white"
             >
               <img
                 src={item.image}

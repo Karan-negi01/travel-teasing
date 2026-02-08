@@ -213,24 +213,22 @@ function SearchContent() {
                       href={`/temples/${temple.id}`}
                       className="bg-white rounded-2xl border border-gray-200 hover:shadow-xl transition-all overflow-hidden group"
                     >
-                      <div className="relative h-44">
+                      <div className="relative h-56 sm:h-auto sm:aspect-[4/3] overflow-hidden">
                         <img
                           src={imagePool[index % imagePool.length]}
                           alt={temple.name}
                           className="h-full w-full object-cover group-hover:scale-[1.03] transition-transform duration-500"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
-                        <div className="absolute bottom-3 left-3 right-3 text-white text-sm font-semibold">
-                          {temple.name}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+                        <div className="absolute bottom-3 left-3 right-3 text-white">
+                          <p className="text-sm font-semibold drop-shadow">{temple.name}</p>
                         </div>
                       </div>
-                      <div className="p-6">
-                        <p className="text-gray-600 text-sm mb-2">
-                          {temple.city}, {temple.state}
+                      <div className="p-4 sm:p-6 space-y-2">
+                        <p className="text-sm text-gray-600 line-clamp-2">
+                          {temple.city}, {temple.state} — {temple.description}
                         </p>
-                        <p className="text-gray-600 text-sm line-clamp-2">
-                          {temple.description}
-                        </p>
+                        <span className="rounded-full bg-orange-50 px-2.5 py-1 text-xs font-semibold text-orange-700">Temple</span>
                       </div>
                     </Link>
                   ))}
@@ -251,24 +249,20 @@ function SearchContent() {
                       href={`/treks/${trek.id}`}
                       className="bg-white rounded-2xl border border-gray-200 hover:shadow-xl transition-all overflow-hidden group"
                     >
-                      <div className="relative h-44">
+                      <div className="relative h-56 sm:h-auto sm:aspect-[4/3] overflow-hidden">
                         <img
                           src={imagePool[(index + 2) % imagePool.length]}
                           alt={trek.name}
                           className="h-full w-full object-cover group-hover:scale-[1.03] transition-transform duration-500"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
-                        <div className="absolute bottom-3 left-3 right-3 text-white text-sm font-semibold">
-                          {trek.name}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+                        <div className="absolute bottom-3 left-3 right-3 text-white">
+                          <p className="text-sm font-semibold drop-shadow">{trek.name}</p>
                         </div>
                       </div>
-                      <div className="p-6">
-                        <p className="text-gray-600 text-sm mb-2">
-                          {trek.state}
-                        </p>
-                        <p className="text-gray-600 text-sm line-clamp-2">
-                          {trek.description}
-                        </p>
+                      <div className="p-4 sm:p-6 space-y-2">
+                        <p className="text-sm text-gray-600 line-clamp-2">{trek.state} — {trek.description}</p>
+                        <span className="rounded-full bg-emerald-50 px-2.5 py-1 text-xs font-semibold text-emerald-700">Trek</span>
                       </div>
                     </Link>
                   ))}
@@ -289,24 +283,20 @@ function SearchContent() {
                       href={`/offbeat/${place.id}`}
                       className="bg-white rounded-2xl border border-gray-200 hover:shadow-xl transition-all overflow-hidden group"
                     >
-                      <div className="relative h-44">
+                      <div className="relative h-56 sm:h-auto sm:aspect-[4/3] overflow-hidden">
                         <img
                           src={imagePool[(index + 4) % imagePool.length]}
                           alt={place.name}
                           className="h-full w-full object-cover group-hover:scale-[1.03] transition-transform duration-500"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
-                        <div className="absolute bottom-3 left-3 right-3 text-white text-sm font-semibold">
-                          {place.name}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+                        <div className="absolute bottom-3 left-3 right-3 text-white">
+                          <p className="text-sm font-semibold drop-shadow">{place.name}</p>
                         </div>
                       </div>
-                      <div className="p-6">
-                        <p className="text-gray-600 text-sm mb-2">
-                          {place.city}, {place.state}
-                        </p>
-                        <p className="text-gray-600 text-sm line-clamp-2">
-                          {place.description}
-                        </p>
+                      <div className="p-4 sm:p-6 space-y-2">
+                        <p className="text-sm text-gray-600 line-clamp-2">{place.city}, {place.state} — {place.description}</p>
+                        <span className="rounded-full bg-violet-50 px-2.5 py-1 text-xs font-semibold text-violet-700">Off-beat</span>
                       </div>
                     </Link>
                   ))}

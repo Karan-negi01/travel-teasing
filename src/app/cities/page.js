@@ -113,21 +113,24 @@ export default function CitiesPage() {
                 href={`/cities/${city.id}`}
                 className="group rounded-2xl overflow-hidden border border-gray-200/80 bg-white shadow-sm hover:shadow-lg hover:border-slate-200/60 transition-all duration-300"
               >
-                <div className="relative h-44">
+                <div className="relative h-56 sm:h-auto sm:aspect-[4/3] overflow-hidden">
                   <img
                     src={imagePool[index % imagePool.length]}
                     alt={city.name}
                     className="h-full w-full object-cover group-hover:scale-[1.03] transition-transform duration-500"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
                   <div className="absolute bottom-3 left-3 right-3 text-white">
-                    <p className="text-lg font-semibold">{city.name}</p>
-                    <p className="text-xs text-white/85">{state?.name}</p>
+                    <p className="text-sm font-semibold drop-shadow">{city.name}</p>
+                    <p className="text-xs text-white/90">{state?.name}</p>
                   </div>
                 </div>
-                <div className="p-5">
-                  <p className="text-sm text-gray-600">Discover routes, stays, and local experiences.</p>
-                  <span className="mt-3 inline-block text-sm font-semibold text-slate-600 group-hover:underline">Explore city →</span>
+                <div className="p-4 sm:p-5 space-y-2">
+                  <p className="text-sm text-gray-600 line-clamp-2">Discover routes, stays, and local experiences.</p>
+                  <div className="flex items-center justify-between text-xs text-gray-600">
+                    <span>{state?.name}</span>
+                    <span className="rounded-full bg-orange-50 px-2.5 py-1 font-semibold text-orange-700">City</span>
+                  </div>
                 </div>
               </Link>
             );

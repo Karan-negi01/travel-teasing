@@ -287,7 +287,7 @@ export default function TemplesPage() {
                 href={item.href}
                 className="group block rounded-2xl overflow-hidden bg-white border border-gray-200/80 shadow-sm hover:border-orange-200/60 hover:shadow-lg hover:shadow-orange-50/20 transition-all duration-300"
               >
-                <div className="relative aspect-[4/3] overflow-hidden">
+                <div className="relative h-56 sm:h-auto sm:aspect-[4/3] overflow-hidden">
                   <img
                     src={circuitImages[index]}
                     alt={item.title}
@@ -298,7 +298,7 @@ export default function TemplesPage() {
                     {index + 1}
                   </div>
                 </div>
-                <div className="p-5 md:p-6">
+                <div className="p-4 sm:p-5 md:p-6">
                   <h3 className="text-lg font-bold text-gray-900 group-hover:text-orange-600 transition-colors">
                     {item.title}
                   </h3>
@@ -333,30 +333,31 @@ export default function TemplesPage() {
                 href={`/temples/${temple.id}`}
                 className="group rounded-2xl overflow-hidden bg-white border border-gray-200/80 shadow-sm hover:shadow-lg hover:border-orange-200/60 transition-all duration-300"
               >
-                <div className="relative aspect-[16/10] overflow-hidden">
+                <div className="relative h-56 sm:h-auto sm:aspect-[16/10] overflow-hidden">
                   <img
                     src={templeImages[index % templeImages.length]}
                     alt={temple.name}
                     className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
                   <div className="absolute top-3 left-3">
                     <span className="rounded-full bg-white/95 px-2.5 py-1 text-[11px] font-semibold text-gray-800 shadow-sm">
                       {categoryLabels[temple.category] || temple.category}
                     </span>
                   </div>
                   <div className="absolute bottom-3 left-3 right-3 text-white">
-                    <h3 className="font-bold text-lg">{temple.name}</h3>
+                    <p className="text-sm font-semibold drop-shadow">{temple.name}</p>
                     <p className="text-xs text-white/90 mt-0.5">{temple.city}, {temple.state}</p>
                   </div>
                 </div>
-                <div className="p-5">
-                  <p className="text-gray-600 text-sm leading-relaxed line-clamp-2">
+                <div className="p-4 sm:p-5 space-y-2">
+                  <p className="text-sm text-gray-600 line-clamp-2">
                     {temple.description}
                   </p>
-                  <span className="mt-4 inline-block text-sm font-semibold text-orange-600 group-hover:underline">
-                    View temple →
-                  </span>
+                  <div className="flex items-center justify-between text-xs text-gray-600">
+                    <span className="rounded-full bg-orange-50 px-2.5 py-1 font-semibold text-orange-700">Temple</span>
+                    <span className="text-sm font-semibold text-orange-600 group-hover:underline">View →</span>
+                  </div>
                 </div>
               </Link>
             ))}

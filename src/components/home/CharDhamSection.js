@@ -34,7 +34,7 @@ export default function CharDhamSection() {
               href={`/temples/${dham.id}`}
               className="group rounded-2xl overflow-hidden border border-gray-200 bg-white hover:shadow-lg transition-shadow"
             >
-              <div className="relative h-72">
+              <div className="relative h-56 sm:h-72">
                 <img
                   src={
                     templeImages[dham.name] ||
@@ -47,7 +47,7 @@ export default function CharDhamSection() {
                   {dham.state}
                 </div>
               </div>
-              <div className="p-5 space-y-3">
+              <div className="p-4 sm:p-5 space-y-2 sm:space-y-3">
                 <div className="flex items-start justify-between">
                   <div>
                     <h3 className="text-xl font-semibold text-gray-900">

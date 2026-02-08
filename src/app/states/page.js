@@ -112,23 +112,26 @@ export default function StatesPage() {
               href={`/states/${state.id}`}
               className="group rounded-2xl overflow-hidden border border-gray-200/80 bg-white shadow-sm hover:shadow-lg hover:border-slate-200/60 transition-all duration-300"
             >
-              <div className="relative h-48">
+              <div className="relative h-56 sm:h-auto sm:aspect-[4/3] overflow-hidden">
                 <img
                   src={imagePool[index % imagePool.length]}
                   alt={state.name}
                   className="h-full w-full object-cover group-hover:scale-[1.03] transition-transform duration-500"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
                 <div className="absolute bottom-3 left-3 right-3 text-white">
-                  <p className="text-lg font-semibold">{state.name}</p>
-                  <p className="text-xs text-white/85">
+                  <p className="text-sm font-semibold drop-shadow">{state.name}</p>
+                  <p className="text-xs text-white/90">
                     {getCitiesByState(state.id).length} cities to explore
                   </p>
                 </div>
               </div>
-              <div className="p-5">
+              <div className="p-4 sm:p-5 space-y-2">
                 <p className="text-sm text-gray-600 line-clamp-2">{state.description}</p>
-                <span className="mt-3 inline-block text-sm font-semibold text-slate-600 group-hover:underline">Explore state →</span>
+                <div className="flex items-center justify-between text-xs text-gray-600">
+                  <span>{getCitiesByState(state.id).length} cities</span>
+                  <span className="rounded-full bg-orange-50 px-2.5 py-1 font-semibold text-orange-700">State</span>
+                </div>
               </div>
             </Link>
           ))}
@@ -147,21 +150,24 @@ export default function StatesPage() {
               href={`/states/${state.id}`}
               className="group rounded-2xl overflow-hidden border border-gray-200/80 bg-white shadow-sm hover:shadow-lg hover:border-slate-200/60 transition-all duration-300"
             >
-              <div className="relative h-44">
+              <div className="relative h-56 sm:h-auto sm:aspect-[4/3] overflow-hidden">
                 <img
                   src={imagePool[(index + 2) % imagePool.length]}
                   alt={state.name}
                   className="h-full w-full object-cover group-hover:scale-[1.03] transition-transform duration-500"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
-                <div className="absolute bottom-3 left-3 right-3 text-white text-sm font-semibold">
-                  {state.name}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+                <div className="absolute bottom-3 left-3 right-3 text-white">
+                  <p className="text-sm font-semibold drop-shadow">{state.name}</p>
+                  <p className="text-xs text-white/90">{getCitiesByState(state.id).length} cities</p>
                 </div>
               </div>
-              <div className="p-5">
+              <div className="p-4 sm:p-5 space-y-2">
                 <p className="text-sm text-gray-600 line-clamp-2">{state.description}</p>
-                <p className="text-xs text-gray-500 mt-2">{getCitiesByState(state.id).length} cities</p>
-                <span className="mt-3 inline-block text-sm font-semibold text-slate-600 group-hover:underline">Explore →</span>
+                <div className="flex items-center justify-between text-xs text-gray-600">
+                  <span>{getCitiesByState(state.id).length} cities</span>
+                  <span className="rounded-full bg-orange-50 px-2.5 py-1 font-semibold text-orange-700">State</span>
+                </div>
               </div>
             </Link>
           ))}

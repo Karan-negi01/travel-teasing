@@ -323,28 +323,28 @@ export default function PlanTripPage() {
                 href={item.href}
                 className="group rounded-2xl border border-gray-200 bg-white overflow-hidden shadow-sm hover:border-orange-200 hover:shadow-lg transition-all"
               >
-                <div className="relative aspect-[4/3] overflow-hidden">
+                <div className="relative h-56 sm:h-auto sm:aspect-[4/3] overflow-hidden">
                   <img
                     src={item.image}
                     alt={item.title}
                     className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
-                  <span className="absolute top-3 left-3 rounded-full bg-white/95 px-2.5 py-1 text-xs font-semibold text-gray-800">
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+                  <span className="absolute top-3 left-3 rounded-full bg-white/90 px-2.5 py-1 text-xs font-semibold text-gray-900">
                     {item.tag}
                   </span>
+                  <div className="absolute bottom-3 left-3 right-3 text-white">
+                    <p className="text-sm font-semibold drop-shadow">{item.title}</p>
+                  </div>
                 </div>
-                <div className="p-4">
-                  <h3 className="font-bold text-gray-900 group-hover:text-orange-600 transition-colors">
-                    {item.title}
-                  </h3>
-                  <p className="mt-1 text-sm text-gray-600 line-clamp-2">
+                <div className="p-4 space-y-2">
+                  <p className="text-sm text-gray-600 line-clamp-2">
                     {item.description}
                   </p>
-                  <span className="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-orange-600">
-                    Explore
-                    <span className="group-hover:translate-x-1 transition-transform">→</span>
-                  </span>
+                  <div className="flex items-center justify-between text-xs text-gray-600">
+                    <span>{item.tag}</span>
+                    <span className="rounded-full bg-orange-50 px-2.5 py-1 font-semibold text-orange-700">Explore</span>
+                  </div>
                 </div>
               </Link>
             ))}

@@ -32,30 +32,27 @@ export default function OffbeatSection() {
               href={`/offbeat/${place.id}`}
               className="group rounded-2xl overflow-hidden border border-gray-200/80 bg-white shadow-sm hover:shadow-lg hover:border-violet-200/60 transition-all duration-300"
             >
-              <div className="relative aspect-[4/3] overflow-hidden">
+              <div className="relative h-56 sm:h-auto sm:aspect-[4/3] overflow-hidden">
                 <img
                   src={placeImages[index % placeImages.length]}
                   alt={place.name}
                   className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/25 to-transparent" />
-                <div className="absolute top-3 left-3 rounded-full bg-white/95 px-2.5 py-1 text-xs font-semibold text-gray-800 shadow-sm">
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+                <div className="absolute top-3 left-3 rounded-full bg-white/90 px-2.5 py-1 text-xs font-semibold text-gray-900 shadow-sm">
                   {place.type}
                 </div>
                 <div className="absolute bottom-3 left-3 right-3 text-white">
-                  <h3 className="text-lg font-bold">{place.name}</h3>
+                  <p className="text-sm font-semibold drop-shadow">{place.name}</p>
                   <p className="text-xs text-white/90 mt-0.5">{place.city}, {place.state}</p>
                 </div>
               </div>
-              <div className="p-5">
-                <p className="text-gray-600 text-sm leading-relaxed line-clamp-2">{place.description}</p>
-                <div className="mt-3 flex items-center justify-between text-xs text-gray-500">
+              <div className="p-4 sm:p-5 space-y-2">
+                <p className="text-sm text-gray-600 line-clamp-2">{place.description}</p>
+                <div className="flex items-center justify-between text-xs text-gray-600">
                   <span>{place.bestTime}</span>
-                  <span className="rounded-full bg-violet-50 px-2.5 py-1 font-semibold text-violet-700">Hidden</span>
+                  <span className="rounded-full bg-violet-50 px-2.5 py-1 font-semibold text-violet-700">Off-beat</span>
                 </div>
-                <span className="mt-4 inline-block text-sm font-semibold text-violet-600 group-hover:underline">
-                  Explore →
-                </span>
               </div>
             </Link>
           ))}
