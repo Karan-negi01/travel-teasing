@@ -48,9 +48,6 @@ export default function JyotirlingaSection() {
                   className="h-full w-full object-cover group-hover:scale-[1.03] transition-transform duration-500"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-                <div className="absolute top-3 left-3 rounded-full bg-white/90 px-2.5 py-1 text-xs font-semibold text-gray-900">
-                  #{jyotirlinga.number}
-                </div>
                 <div className="absolute bottom-3 left-3 right-3">
                   <p className="text-white text-sm font-semibold drop-shadow">
                     {jyotirlinga.name}

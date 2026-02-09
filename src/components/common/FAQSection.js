@@ -12,6 +12,18 @@ export default function FAQSection() {
       q: "Can I plan across categories?",
       a: "Yes. Mix temples, treks, and off-beat places into one itinerary.",
     },
+    {
+      q: "Can you help me book stays and transport?",
+      a: "Yes. You can open the booking flow from any destination or from the Plan Trip page to request stays and transport.",
+    },
+    {
+      q: "Is there a fee to use TravelTeasing?",
+      a: "Browsing routes, destinations, and tips is free. You only pay when you confirm bookings with our partners.",
+    },
+    {
+      q: "How do I share my trip plan with friends or family?",
+      a: "You can bookmark key pages, export details, or simply share links to temple, trek, and off-beat collections you like.",
+    },
   ];
 
   return (

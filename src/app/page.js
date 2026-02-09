@@ -8,7 +8,6 @@ import ExperienceStrip from "@/components/home/ExperienceStrip";
 import TreksSection from "@/components/home/TreksSection";
 import OffbeatSection from "@/components/home/OffbeatSection";
 import PlayfulStats from "@/components/home/PlayfulStats";
-import TrustBar from "@/components/home/TrustBar";
 import Testimonials from "@/components/home/Testimonials";
 import NewsletterCTA from "@/components/home/NewsletterCTA";
 import PlanTripCTA from "@/components/common/PlanTripCTA";
@@ -20,7 +19,6 @@ import JourneyBanner from "@/components/home/JourneyBanner";
 import QuoteStrip from "@/components/home/QuoteStrip";
 import TripStyleStrip from "@/components/home/TripStyleStrip";
 import FeaturedStays from "@/components/home/FeaturedStays";
-import TransportStrip from "@/components/home/TransportStrip";
 import Footer from "@/components/common/Footer";
 
 export default function Home() {
@@ -28,7 +26,8 @@ export default function Home() {
     <div className="min-h-screen bg-white">
       <Navbar />
       <Banner />
-      <TrustBar />
+      {/* Quick style selector just below the hero */}
+      <TripStyleStrip />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <InfoStrip
           tone="slate"
@@ -57,7 +56,6 @@ export default function Home() {
         />
       </div>
       <JourneyBanner />
-      <TransportStrip />
       <FeaturedCollections />
       <MysticDestinationsTimeline />
       <StatesSpotlight />

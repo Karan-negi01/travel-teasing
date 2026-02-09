@@ -31,8 +31,18 @@ export default function Navbar() {
 
   return (
     <>
-      <div className="bg-gradient-to-r from-orange-500 via-pink-500 to-purple-600 text-white text-center py-2 px-3 text-xs sm:text-sm font-medium">
-        Discover India’s sacred sites, treks, and hidden stays
+      <div className="relative overflow-hidden bg-gradient-to-r from-orange-500 via-pink-500 to-purple-600 text-white">
+        <div className="marquee-inner py-2 px-3 text-xs sm:text-sm font-medium whitespace-nowrap">
+          <span className="mx-8">
+            Discover India’s sacred sites, treks, and hidden stays
+          </span>
+          <span className="mx-8">
+            Plan temples, treks, and off-beat escapes in one place
+          </span>
+          <span className="mx-8">
+            Custom journeys — you pick the routes, we help with details
+          </span>
+        </div>
       </div>
 
       <nav
