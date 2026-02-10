@@ -204,6 +204,18 @@ html {
   animation: marquee-horizontal 24s linear infinite;
 }
 
+/* Hide scrollbars where needed (but keep scrolling) */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+/* (Testimonials carousel animation moved to JS) */
+
 /* Mysterious Realms section */
 @keyframes realm-hex-enter {
   from {

@@ -40,7 +40,7 @@ export default function TreksPage() {
   const featuredTreks = treks.slice(0, 3);
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen">
       <Navbar />
 
       {/* Hero — editorial style */}
@@ -200,7 +200,6 @@ export default function TreksPage() {
           <p className="mt-4 text-gray-600 text-sm md:text-base">
             Curated routes with altitude, seasons, and difficulty in one view.
           </p>
-          <p className="text-xl md:text-2xl font-bold text-emerald-500/90 tabular-nums mt-2">{treks.length}+</p>
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-4 sm:gap-6">
           {treks.map((trek, index) => (

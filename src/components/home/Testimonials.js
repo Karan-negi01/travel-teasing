@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const testimonials = [
   {
@@ -41,77 +41,115 @@ const testimonials = [
   },
 ];
 
+const testimonialVideos = [
+  "https://videos.pexels.com/video-files/857195/857195-hd_1280_720_24fps.mp4",
+  "https://videos.pexels.com/video-files/2608370/2608370-hd_1280_720_24fps.mp4",
+  "https://videos.pexels.com/video-files/857125/857125-hd_1280_720_24fps.mp4",
+  "https://videos.pexels.com/video-files/2132070/2132070-uhd_2560_1440_25fps.mp4",
+  "https://videos.pexels.com/video-files/3409869/3409869-hd_1280_720_25fps.mp4",
+  "https://videos.pexels.com/video-files/857130/857130-hd_1280_720_24fps.mp4",
+];
+
+function MuteIcon({ muted }) {
+  if (muted) {
+    // speaker with slash
+    return (
+      <svg
+        viewBox="0 0 24 24"
+        className="h-4 w-4 text-white"
+        aria-hidden="true"
+      >
+        <path
+          d="M4 9v6h4l5 4V5L8 9H4z"
+          fill="currentColor"
+        />
+        <path
+          d="M18.36 6.64 17 8m0 0-2 2m2-2 2 2m-2-2V4m0 4v4m0 0-1.36 1.36M17 12l2 2"
+          stroke="currentColor"
+          strokeWidth="1.6"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    );
+  }
+
+  // simple speaker icon
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className="h-4 w-4 text-white"
+      aria-hidden="true"
+    >
+      <path
+        d="M4 9v6h4l5 4V5L8 9H4z"
+        fill="currentColor"
+      />
+      <path
+        d="M17 8a4 4 0 0 1 0 8"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        fill="none"
+      />
+    </svg>
+  );
+}
+
 export default function Testimonials() {
-  const [index, setIndex] = useState(0);
-
-  useEffect(() => {
-    const id = setInterval(() => {
-      setIndex((prev) => (prev + 1) % testimonials.length);
-    }, 5500);
-    return () => clearInterval(id);
-  }, []);
-
-  const current = testimonials[index];
+  const [isMuted, setIsMuted] = useState(true);
 
   return (
-    <section className="py-14 sm:py-16 bg-gray-50">
+    <section className="py-14 sm:py-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-end justify-between gap-6 mb-8 sm:mb-10">
-          <div>
-            <p className="text-sm font-semibold text-gray-500">Traveler stories</p>
-            <h2 className="text-3xl md:text-4xl font-semibold text-gray-900">
-              Loved by explorers
-            </h2>
-          </div>
-          <div className="hidden sm:flex items-center gap-2 text-xs text-gray-500">
-            <span>Swipe or let it play</span>
-          </div>
+        <div className="flex flex-col items-center text-center gap-3 mb-8 sm:mb-10">
+          <p className="text-sm font-semibold text-gray-500">Traveler stories</p>
+          <h2 className="text-3xl md:text-4xl font-semibold text-gray-900">
+            Loved by explorers
+          </h2>
+          <p className="text-xs text-gray-500">
+            Reels-style clips · swipe / scroll sideways · tap sound
+          </p>
         </div>
       </div>
 
-      {/* Full-width carousel rail */}
-      <div className="w-full overflow-hidden">
-        <div className="flex justify-center">
-          <div className="mx-4 sm:mx-8 max-w-xl sm:max-w-2xl lg:max-w-3xl w-full">
-            <div className="relative rounded-3xl border border-gray-200 bg-white/95 shadow-md px-5 py-6 sm:px-8 sm:py-8 lg:px-10 lg:py-9">
-              <div className="absolute -top-6 left-6 h-10 w-10 rounded-2xl bg-orange-500 text-white flex items-center justify-center shadow-lg">
-                <span className="text-xl">“</span>
-              </div>
-              <p className="text-sm sm:text-base text-gray-800 leading-relaxed mt-2 sm:mt-1">
-                {current.quote}
-              </p>
-              <div className="mt-5 sm:mt-6 flex items-center justify-between gap-4">
-                <div>
-                  <p className="text-sm font-semibold text-gray-900">
-                    {current.name}
-                  </p>
-                  <p className="text-xs text-gray-500">{current.location}</p>
+      {/* Horizontal scroll, reels-style cards (no auto movement) */}
+      <div className="w-full overflow-x-auto no-scrollbar">
+        <div className="px-4 sm:px-6 lg:px-8">
+          <div className="flex items-stretch gap-4 sm:gap-5 pb-3 snap-x snap-mandatory">
+            {testimonials.map((item, i) => {
+              const videoSrc = testimonialVideos[i % testimonialVideos.length];
+              return (
+                <div
+                  key={item.name}
+                  className="snap-start w-[85vw] sm:w-[70vw] md:w-[40vw] lg:w-[20%] xl:w-[18%] flex-shrink-0 rounded-3xl border border-gray-200 bg-white/95 shadow-sm overflow-hidden"
+                >
+                  <div className="relative aspect-[9/16] bg-black">
+                    <video
+                      src={videoSrc}
+                      autoPlay
+                      muted={isMuted}
+                      loop
+                      playsInline
+                      className="h-full w-full object-cover"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setIsMuted((prev) => !prev)}
+                      className="absolute bottom-2 right-2 inline-flex h-7 w-7 items-center justify-center rounded-full bg-black/60 hover:bg-black/80 transition"
+                      aria-label={isMuted ? "Unmute videos" : "Mute videos"}
+                    >
+                      <MuteIcon muted={isMuted} />
+                    </button>
+                  </div>
                 </div>
-                <div className="flex items-center gap-1 text-xs text-gray-500">
-                  <span>
-                    {index + 1} / {testimonials.length}
-                  </span>
-                </div>
-              </div>
-            </div>
+              );
+            })}
           </div>
-        </div>
-
-        {/* Dots */}
-        <div className="mt-4 flex justify-center gap-2">
-          {testimonials.map((_, i) => (
-            <button
-              key={i}
-              type="button"
-              onClick={() => setIndex(i)}
-              className={`h-1.5 rounded-full transition-all ${
-                i === index ? "w-6 bg-gray-900" : "w-2 bg-gray-300"
-              }`}
-              aria-label={`Go to testimonial ${i + 1}`}
-            />
-          ))}
         </div>
       </div>
     </section>
   );
 }
+

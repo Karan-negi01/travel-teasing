@@ -14,7 +14,7 @@ export default function TreksSection() {
   const featuredTreks = treks.slice(0, 6);
 
   return (
-    <section className="py-20 bg-white">
+    <section className="py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-2xl mx-auto mb-12">
           <p className="text-xs font-semibold text-emerald-600 uppercase tracking-[0.2em]">Curated adventures</p>

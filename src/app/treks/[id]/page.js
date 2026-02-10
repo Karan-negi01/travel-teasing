@@ -50,7 +50,7 @@ export default async function TrekDetailPage({ params }) {
   const nearbyStays = getStaysByState(trek.stateId).slice(0, 6);
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen">
       <Navbar />
 
       {/* Hero — editorial (same theme as listing) */}

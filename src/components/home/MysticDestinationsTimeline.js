@@ -67,7 +67,7 @@ export default function MysticDestinationsTimeline() {
   return (
     <section
       ref={containerRef}
-      className="relative py-28 md:py-36 overflow-hidden bg-white"
+      className="relative py-28 md:py-36 overflow-hidden"
     >
       {/* Subtle top edge - adds depth without color */}
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent" />

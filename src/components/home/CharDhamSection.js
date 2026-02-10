@@ -14,7 +14,7 @@ export default function CharDhamSection() {
   };
 
   return (
-    <section id="explore-section" className="py-12 sm:py-16 lg:py-20 bg-white">
+    <section id="explore-section" className="py-12 sm:py-16 lg:py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-10 px-2">
           <p className="text-xs font-semibold text-orange-600 uppercase tracking-[0.2em]">Char Dham</p>

@@ -58,7 +58,7 @@ function BookingContent() {
 
 export default function BookingPage() {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen">
       <Navbar />
       <Suspense fallback={
         <div className="max-w-2xl mx-auto px-4 py-24 text-center text-gray-500">Loading...</div>

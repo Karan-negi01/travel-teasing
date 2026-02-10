@@ -86,7 +86,7 @@ const featuredCircuits = [
 
 export default function TemplesPage() {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen">
       <Navbar />
 
       {/* Hero - editorial style */}
@@ -294,9 +294,6 @@ export default function TemplesPage() {
                     className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-600"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                  <div className="absolute top-4 right-4 flex h-12 w-12 items-center justify-center rounded-full bg-white text-lg font-bold text-orange-600 shadow-lg">
-                    {index + 1}
-                  </div>
                 </div>
                 <div className="p-4 sm:p-5 md:p-6">
                   <h3 className="text-lg font-bold text-gray-900 group-hover:text-orange-600 transition-colors">
@@ -324,7 +321,6 @@ export default function TemplesPage() {
             <p className="mt-4 text-gray-600 text-sm md:text-base">
               From sacred circuits to hidden sanctums across India.
             </p>
-            <p className="text-xl md:text-2xl font-bold text-orange-500/90 tabular-nums mt-2">{allTemples.length}+</p>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6">
             {allTemples.map((temple, index) => (
@@ -354,10 +350,9 @@ export default function TemplesPage() {
                   <p className="text-sm text-gray-600 line-clamp-2">
                     {temple.description}
                   </p>
-                  <div className="flex items-center justify-between text-xs text-gray-600">
-                    <span className="rounded-full bg-orange-50 px-2.5 py-1 font-semibold text-orange-700">Temple</span>
-                    <span className="text-sm font-semibold text-orange-600 group-hover:underline">View →</span>
-                  </div>
+                  <span className="inline-block text-sm font-semibold text-orange-600 group-hover:underline">
+                    View temple →
+                  </span>
                 </div>
               </Link>
             ))}

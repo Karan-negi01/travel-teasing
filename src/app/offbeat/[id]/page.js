@@ -43,7 +43,7 @@ export default async function OffbeatDetailPage({ params }) {
   const nearbyStays = getStaysNearDestination(place.cityId, place.stateId, 6);
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen">
       <Navbar />
 
       {/* Hero — editorial (same theme as listing) */}
