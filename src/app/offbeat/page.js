@@ -154,9 +154,8 @@ export default function OffbeatPage() {
                 </div>
                 <div className="p-4 sm:p-5 space-y-2">
                   <p className="text-sm text-gray-600 line-clamp-2">{place.description}</p>
-                  <div className="flex items-center justify-between text-xs text-gray-600">
+                  <div className="flex items-center text-xs text-gray-600">
                     <span>{place.bestTime}</span>
-                    <span className="rounded-full bg-violet-50 px-2.5 py-1 font-semibold text-violet-700">Off-beat</span>
                   </div>
                 </div>
               </Link>
@@ -201,9 +200,8 @@ export default function OffbeatPage() {
               </div>
               <div className="p-4 sm:p-5 space-y-2">
                 <p className="text-sm text-gray-600 line-clamp-2">{place.description}</p>
-                <div className="flex items-center justify-between text-xs text-gray-600">
+                <div className="flex items-center text-xs text-gray-600">
                   <span>Best: {place.bestTime}</span>
-                  <span className="rounded-full bg-violet-50 px-2.5 py-1 font-semibold text-violet-700">Off-beat</span>
                 </div>
               </div>
             </Link>

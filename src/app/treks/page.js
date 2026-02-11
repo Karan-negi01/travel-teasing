@@ -180,9 +180,8 @@ export default function TreksPage() {
                 </div>
                 <div className="p-4 sm:p-5 space-y-2">
                   <p className="text-sm text-gray-600 line-clamp-2">{trek.description}</p>
-                  <div className="flex items-center justify-between text-xs text-gray-600">
+                  <div className="flex items-center text-xs text-gray-600">
                     <span>{trek.difficulty}</span>
-                    <span className="rounded-full bg-emerald-50 px-2.5 py-1 font-semibold text-emerald-700">Trek</span>
                   </div>
                 </div>
               </Link>
@@ -232,9 +231,8 @@ export default function TreksPage() {
               </div>
               <div className="p-4 sm:p-5 space-y-2">
                 <p className="text-sm text-gray-600 line-clamp-2">{trek.description}</p>
-                <div className="flex items-center justify-between text-xs text-gray-600">
+                <div className="flex items-center text-xs text-gray-600">
                   <span>{trek.maxAltitude}</span>
-                  <span className="rounded-full bg-emerald-50 px-2.5 py-1 font-semibold text-emerald-700">Trek</span>
                 </div>
               </div>
             </Link>

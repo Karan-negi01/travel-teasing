@@ -18,67 +18,57 @@ export default function JyotirlingaSection() {
   ];
 
   return (
-    <section className="py-12 sm:py-16 lg:py-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-12 px-2">
-          <div className="inline-flex items-center gap-2 rounded-full bg-orange-50 px-4 py-2 text-xs font-semibold text-orange-700">
-            🔱 Sacred Circuit
+    <section className="py-8 sm:py-10">
+      <div className="max-w-[90vw] mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-4 sm:mb-5">
+          <div className="max-w-2xl">
+            <p className="text-xs font-semibold text-orange-600 uppercase tracking-[0.2em]">
+              Sacred circuit
+            </p>
+            <h2 className="text-3xl md:text-4xl font-semibold text-gray-900 mt-2">
+              The 12 Jyotirlingas
+            </h2>
           </div>
-          <h2 className="mt-4 text-4xl md:text-5xl font-semibold text-gray-900">
-            The 12 Jyotirlingas
-          </h2>
-          <div className="mt-2 h-0.5 w-12 rounded-full bg-orange-400 mx-auto" />
-          <p className="text-gray-600 mt-3">
-            Twelve divine shrines of Lord Shiva, each with a unique story,
-            architecture, and spiritual aura.
-          </p>
+          <Link
+            href="/temples/jyotirlinga"
+            className="inline-flex shrink-0 items-center gap-2 rounded-xl border border-orange-500/80 bg-white px-4 py-2.5 text-sm font-semibold text-orange-600 shadow-sm hover:bg-orange-500 hover:text-white transition-colors"
+          >
+            View all
+            <span aria-hidden>→</span>
+          </Link>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-4 sm:gap-5">
           {jyotirlingas.map((jyotirlinga, index) => (
             <Link
               key={jyotirlinga.id}
               href={`/temples/${jyotirlinga.id}`}
-              className="group overflow-hidden rounded-2xl border border-gray-200 bg-white hover:shadow-lg transition-shadow"
+              className="group overflow-hidden rounded-2xl border border-gray-200 bg-white hover:shadow-xl hover:border-orange-200/60 transition-all duration-300"
             >
-              <div className="relative h-56">
+              <div className="relative h-44 sm:h-48 overflow-hidden">
                 <img
                   src={templeImages[index]}
                   alt={jyotirlinga.name}
-                  className="h-full w-full object-cover group-hover:scale-[1.03] transition-transform duration-500"
+                  className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-                <div className="absolute bottom-3 left-3 right-3">
-                  <p className="text-white text-sm font-semibold drop-shadow">
+                <div className="absolute bottom-3 left-3 right-3 text-white">
+                  <p className="text-sm font-semibold drop-shadow leading-tight">
                     {jyotirlinga.name}
                   </p>
-                  <p className="text-white/90 text-xs">
+                  <p className="text-xs text-white/90 mt-0.5">
                     {jyotirlinga.city}, {jyotirlinga.state}
                   </p>
                 </div>
               </div>
-              <div className="p-4 space-y-2">
-                <p className="text-sm text-gray-600 line-clamp-2">
+              <div className="p-3 sm:p-4 space-y-1.5">
+                <p className="text-xs sm:text-sm text-gray-600 line-clamp-2">
                   {jyotirlinga.description}
                 </p>
-                <div className="flex items-center justify-between text-xs text-gray-600">
-                  <span>{jyotirlinga.bestTime}</span>
-                  <span className="rounded-full bg-orange-50 px-2.5 py-1 font-semibold text-orange-700">
-                    Temple
-                  </span>
-                </div>
+                <p className="text-xs text-gray-500">{jyotirlinga.bestTime}</p>
               </div>
             </Link>
           ))}
-        </div>
-        <div className="text-center mt-10">
-          <Link
-            href="/temples/jyotirlinga"
-            className="inline-flex items-center gap-2 text-sm font-semibold text-orange-600 hover:text-orange-700"
-          >
-            View all
-            <span>→</span>
-          </Link>
         </div>
       </div>
     </section>

@@ -10,6 +10,8 @@ export default function TripStyleStrip() {
       border: "border-orange-200/70",
       text: "Visit Char Dham, Jyotirlingas, and sacred circuits with nearby stays.",
       accent: "text-orange-600",
+      image:
+        "https://images.unsplash.com/photo-1548013146-72479768bada?q=80&w=2070&auto=format&fit=crop",
     },
     {
       label: "Treks & trails",
@@ -19,6 +21,8 @@ export default function TripStyleStrip() {
       border: "border-emerald-200/70",
       text: "Choose easy weekend hikes or high-altitude expeditions by season.",
       accent: "text-emerald-600",
+      image:
+        "https://images.unsplash.com/photo-1482192596544-9eb780fc7f66?q=80&w=2070&auto=format&fit=crop",
     },
     {
       label: "Off-beat stays",
@@ -28,12 +32,14 @@ export default function TripStyleStrip() {
       border: "border-violet-200/70",
       text: "Slow villages, homestays, and story-rich escapes away from crowds.",
       accent: "text-violet-600",
+      image:
+        "https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=2070&auto=format&fit=crop",
     },
   ];
 
   return (
     <section className="py-10 sm:py-12">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[90vw] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-6 sm:mb-8">
           <div>
             <p className="text-xs font-semibold text-gray-500 uppercase tracking-[0.25em]">
@@ -56,28 +62,40 @@ export default function TripStyleStrip() {
               href={style.href}
               className={`group relative overflow-hidden rounded-2xl border bg-white/80 shadow-sm hover:shadow-xl transition-all duration-300 ${style.border}`}
             >
+              {/* Background image from Explore by mood cards */}
+              <img
+                src={style.image}
+                alt={style.label}
+                className="absolute inset-0 h-full w-full object-cover"
+              />
+              {/* Dark base overlay so white text is always readable */}
+              <div
+                className="absolute inset-0 bg-black/55"
+                aria-hidden
+              />
+              {/* Colored gradient tint */}
               <div
                 className={`absolute inset-0 bg-gradient-to-br ${style.tone} opacity-80 group-hover:opacity-100 transition-opacity`}
                 aria-hidden
               />
               <div className="relative p-4 sm:p-5 md:p-6 space-y-3">
-                <span className={`inline-flex items-center rounded-full bg-white/85 px-3 py-1 text-[11px] font-semibold text-gray-900 shadow-sm`}>
+                <span className="inline-flex items-center rounded-full bg-white/10 border border-white/60 px-3 py-1 text-[11px] font-semibold text-white shadow-sm">
                   {style.pill}
                 </span>
                 <h3
-                  className={`text-base sm:text-lg md:text-xl font-semibold text-gray-900 group-hover:translate-y-0.5 transition-transform ${style.accent}`}
+                  className="text-base sm:text-lg md:text-xl font-semibold text-white group-hover:translate-y-0.5 transition-transform"
                 >
                   {style.label}
                 </h3>
-                <p className="text-xs sm:text-sm text-gray-700/90 leading-relaxed line-clamp-3">
+                <p className="text-xs sm:text-sm text-white/90 leading-relaxed line-clamp-3">
                   {style.text}
                 </p>
-                <div className="pt-1 flex items-center justify-between text-xs sm:text-sm font-semibold text-gray-900">
+                <div className="pt-1 flex items-center justify-between text-xs sm:text-sm font-semibold text-white/90">
                   <span className="flex items-center gap-1">
                     Explore
                     <span className="group-hover:translate-x-1 transition-transform">→</span>
                   </span>
-                  <span className="hidden sm:inline text-gray-700/80">
+                  <span className="hidden sm:inline text-white/80">
                     Curated picks
                   </span>
                 </div>

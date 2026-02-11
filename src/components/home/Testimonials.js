@@ -102,7 +102,7 @@ export default function Testimonials() {
 
   return (
     <section className="py-14 sm:py-16">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[90vw] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col items-center text-center gap-3 mb-8 sm:mb-10">
           <p className="text-sm font-semibold text-gray-500">Traveler stories</p>
           <h2 className="text-3xl md:text-4xl font-semibold text-gray-900">

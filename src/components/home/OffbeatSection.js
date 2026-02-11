@@ -14,57 +14,63 @@ export default function OffbeatSection() {
   const featuredPlaces = offbeatPlaces.slice(0, 6);
 
   return (
-    <section className="py-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-2xl mx-auto mb-12">
-          <p className="text-xs font-semibold text-violet-600 uppercase tracking-[0.2em]">Hidden picks</p>
-          <h2 className="mt-2 text-3xl md:text-4xl font-bold text-gray-900 tracking-tight">Hidden gems, big stories</h2>
-          <div className="mt-2 h-0.5 w-12 rounded-full bg-violet-400 mx-auto" />
-          <p className="mt-4 text-gray-600 text-sm md:text-base">
-            Quiet stays, unique cultures, and unexpected adventures.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-          {featuredPlaces.map((place, index) => (
-            <Link
-              key={place.id}
-              href={`/offbeat/${place.id}`}
-              className="group rounded-2xl overflow-hidden border border-gray-200/80 bg-white shadow-sm hover:shadow-lg hover:border-violet-200/60 transition-all duration-300"
-            >
-              <div className="relative h-56 sm:h-auto sm:aspect-[4/3] overflow-hidden">
-                <img
-                  src={placeImages[index % placeImages.length]}
-                  alt={place.name}
-                  className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-                <div className="absolute top-3 left-3 rounded-full bg-white/90 px-2.5 py-1 text-xs font-semibold text-gray-900 shadow-sm">
-                  {place.type}
-                </div>
-                <div className="absolute bottom-3 left-3 right-3 text-white">
-                  <p className="text-sm font-semibold drop-shadow">{place.name}</p>
-                  <p className="text-xs text-white/90 mt-0.5">{place.city}, {place.state}</p>
-                </div>
-              </div>
-              <div className="p-4 sm:p-5 space-y-2">
-                <p className="text-sm text-gray-600 line-clamp-2">{place.description}</p>
-                <div className="flex items-center justify-between text-xs text-gray-600">
-                  <span>{place.bestTime}</span>
-                  <span className="rounded-full bg-violet-50 px-2.5 py-1 font-semibold text-violet-700">Off-beat</span>
-                </div>
-              </div>
-            </Link>
-          ))}
-        </div>
-        <div className="text-center mt-10">
+    <section className="py-8 sm:py-10">
+      <div className="max-w-[90vw] mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-4 sm:mb-5">
+          <div className="max-w-2xl">
+            <p className="text-xs font-semibold text-violet-600 uppercase tracking-[0.2em]">
+              Hidden picks
+            </p>
+            <h2 className="mt-2 text-3xl md:text-4xl font-bold text-gray-900 tracking-tight">
+              Hidden gems, big stories
+            </h2>
+          </div>
           <Link
             href="/offbeat"
-            className="inline-flex items-center gap-2 text-sm font-semibold text-violet-600 hover:text-violet-700"
+            className="inline-flex shrink-0 items-center gap-2 rounded-xl border border-violet-500/80 bg-white px-4 py-2.5 text-sm font-semibold text-violet-700 shadow-sm hover:bg-violet-500 hover:text-white transition-colors"
           >
-            View all places
-            <span>→</span>
+            View all
+            <span aria-hidden>→</span>
           </Link>
+        </div>
+
+        {/* Horizontal scroll rail */}
+        <div className="w-full overflow-x-auto no-scrollbar">
+          <div className="flex items-stretch gap-4 sm:gap-5 pb-2 snap-x snap-mandatory">
+            {featuredPlaces.map((place, index) => (
+              <Link
+                key={place.id}
+                href={`/offbeat/${place.id}`}
+                className="snap-start w-[80vw] sm:w-[48vw] md:w-[36vw] lg:w-[260px] xl:w-[280px] flex-shrink-0 group rounded-2xl overflow-hidden border border-gray-200/80 bg-white shadow-sm hover:shadow-lg hover:border-violet-200/60 transition-all duration-300"
+              >
+                <div className="relative h-56 sm:h-auto sm:aspect-[4/3] overflow-hidden">
+                  <img
+                    src={placeImages[index % placeImages.length]}
+                    alt={place.name}
+                    className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+                  <div className="absolute top-3 left-3 rounded-full bg-white/90 px-2.5 py-1 text-xs font-semibold text-gray-900 shadow-sm">
+                    {place.type}
+                  </div>
+                  <div className="absolute bottom-3 left-3 right-3 text-white">
+                    <p className="text-sm font-semibold drop-shadow">{place.name}</p>
+                    <p className="text-xs text-white/90 mt-0.5">
+                      {place.city}, {place.state}
+                    </p>
+                  </div>
+                </div>
+                <div className="p-4 sm:p-5 space-y-2">
+                  <p className="text-sm text-gray-600 line-clamp-2">
+                    {place.description}
+                  </p>
+                  <div className="flex items-center text-xs text-gray-600">
+                    <span>{place.bestTime}</span>
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
         </div>
       </div>
     </section>
