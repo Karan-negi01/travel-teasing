@@ -14,6 +14,7 @@ export default function StatesSpotlight() {
 
   return (
     <section className="py-8 sm:py-10">
+      {/* Heading + View all within 90vw container (left alignment fixed) */}
       <div className="max-w-[90vw] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-4 sm:mb-5">
           <div className="max-w-2xl">
@@ -32,10 +33,12 @@ export default function StatesSpotlight() {
             <span aria-hidden>→</span>
           </Link>
         </div>
+      </div>
 
-        {/* Horizontal scroll rail */}
-        <div className="w-full overflow-x-auto no-scrollbar">
-          <div className="flex items-stretch gap-4 sm:gap-5 pb-2 snap-x snap-mandatory">
+      {/* Horizontal scroll rail full-width, but padded so left matches heading */}
+      <div className="w-full overflow-x-auto no-scrollbar">
+        <div className="max-w-[90vw] mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-stretch gap-4 sm:gap-5 pb-2 pr-4 sm:pr-6 lg:pr-8 snap-x snap-mandatory">
             {featured.map((state, index) => (
               <Link
                 key={state.id}

@@ -11,6 +11,7 @@ export default function FeaturedStays() {
 
   return (
     <section className="py-8 sm:py-10">
+      {/* Heading + View all within 90vw container */}
       <div className="max-w-[90vw] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-4 sm:mb-5">
           <div className="max-w-2xl">
@@ -29,13 +30,15 @@ export default function FeaturedStays() {
             <span aria-hidden>→</span>
           </Link>
         </div>
-        {/* Horizontal scroll rail */}
-        <div className="w-full overflow-x-auto no-scrollbar">
-          <div className="flex items-stretch gap-4 sm:gap-5 pb-2 snap-x snap-mandatory">
+      </div>
+      {/* Horizontal scroll rail */}
+      <div className="w-full overflow-x-auto no-scrollbar">
+        <div className="max-w-[90vw] mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-stretch gap-4 sm:gap-5 pb-2 pr-4 sm:pr-6 lg:pr-8 snap-x snap-mandatory">
             {featuredStays.map((stay) => (
               <div
                 key={stay.id}
-                className="snap-start w-[72vw] sm:w-[48vw] md:w-[36vw] lg:w-[260px] xl:w-[280px] flex-shrink-0 group rounded-2xl border border-gray-200/80 bg-white overflow-hidden shadow-sm hover:shadow-xl hover:border-orange-200/60 transition-all duration-300"
+                className="snap-start w-[66vw] sm:w-[46vw] md:w-[36vw] lg:w-[260px] xl:w-[280px] flex-shrink-0 group rounded-2xl border border-gray-200/80 bg-white overflow-hidden shadow-sm hover:shadow-xl hover:border-orange-200/60 transition-all duration-300"
               >
                 <div className="relative h-56 sm:h-auto sm:aspect-[4/3] overflow-hidden">
                   <img
