@@ -40,7 +40,7 @@ export default function StatesSpotlight() {
               <Link
                 key={state.id}
                 href={`/states/${state.id}`}
-                className="snap-start w-[80vw] sm:w-[40vw] md:w-[32vw] lg:w-[260px] xl:w-[280px] flex-shrink-0 group rounded-2xl overflow-hidden border border-gray-200 bg-white hover:shadow-xl transition-all"
+                className="snap-start w-[70vw] sm:w-[40vw] md:w-[32vw] lg:w-[260px] xl:w-[280px] flex-shrink-0 group rounded-2xl overflow-hidden border border-gray-200 bg-white hover:shadow-xl transition-all"
               >
                 <div className="relative h-56 sm:h-auto sm:aspect-[4/3] overflow-hidden">
                   <img

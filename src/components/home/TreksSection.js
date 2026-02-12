@@ -41,7 +41,7 @@ export default function TreksSection() {
               <Link
                 key={trek.id}
                 href={`/treks/${trek.id}`}
-                className="snap-start w-[80vw] sm:w-[48vw] md:w-[36vw] lg:w-[260px] xl:w-[280px] flex-shrink-0 group rounded-2xl overflow-hidden border border-gray-200/80 bg-white shadow-sm hover:shadow-lg hover:border-emerald-200/60 transition-all duration-300"
+                className="snap-start w-[72vw] sm:w-[48vw] md:w-[36vw] lg:w-[260px] xl:w-[280px] flex-shrink-0 group rounded-2xl overflow-hidden border border-gray-200/80 bg-white shadow-sm hover:shadow-lg hover:border-emerald-200/60 transition-all duration-300"
               >
                 <div className="relative h-56 sm:h-auto sm:aspect-[4/3] overflow-hidden">
                   <img

@@ -123,7 +123,7 @@ export default function Testimonials() {
               return (
                 <div
                   key={item.name}
-                  className="snap-start w-[85vw] sm:w-[70vw] md:w-[40vw] lg:w-[20%] xl:w-[18%] flex-shrink-0 rounded-3xl border border-gray-200 bg-white/95 shadow-sm overflow-hidden"
+                  className="snap-start w-[78vw] sm:w-[70vw] md:w-[40vw] lg:w-[20%] xl:w-[18%] flex-shrink-0 rounded-3xl border border-gray-200 bg-white/95 shadow-sm overflow-hidden"
                 >
                   <div className="relative aspect-[9/16] bg-black">
                     <video
