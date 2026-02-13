@@ -27,7 +27,7 @@ export default function CitiesSpotlight() {
           </div>
           <Link
             href="/cities"
-            className="inline-flex shrink-0 items-center gap-2 rounded-xl border border-black/80 bg-white px-4 py-2.5 text-sm font-semibold text-black shadow-sm hover:bg-black hover:text-white transition-colors"
+            className="hidden sm:inline-flex shrink-0 items-center gap-2 rounded-xl border border-black/80 bg-white px-4 py-2.5 text-sm font-semibold text-black shadow-sm hover:bg-black hover:text-white transition-colors"
           >
             View all
             <span aria-hidden>→</span>
@@ -45,9 +45,9 @@ export default function CitiesSpotlight() {
                 <Link
                   key={city.id}
                   href={`/cities/${city.id}`}
-                  className="snap-start w-[68vw] sm:w-[40vw] md:w-[32vw] lg:w-[260px] xl:w-[280px] flex-shrink-0 group rounded-2xl overflow-hidden border border-gray-200 bg-white hover:shadow-xl transition-all"
+                  className="snap-start w-[62vw] sm:w-[40vw] md:w-[32vw] lg:w-[260px] xl:w-[280px] flex-shrink-0 group rounded-2xl overflow-hidden border border-gray-200 bg-white hover:shadow-xl transition-all"
                 >
-                  <div className="relative h-56 sm:h-auto sm:aspect-[4/3] overflow-hidden">
+                  <div className="relative h-44 sm:h-auto sm:aspect-[4/3] overflow-hidden">
                     <img
                       src={imagePool[index % imagePool.length]}
                       alt={city.name}
@@ -71,6 +71,17 @@ export default function CitiesSpotlight() {
             })}
           </div>
         </div>
+      </div>
+
+      {/* Mobile View all below cards */}
+      <div className="sm:hidden max-w-[90vw] mx-auto px-4 sm:px-6 lg:px-8 mt-4 flex justify-center">
+        <Link
+          href="/cities"
+          className="inline-flex items-center justify-center gap-1.5 rounded-[3px] border border-black/80 bg-white px-4 py-2 text-xs font-semibold text-black shadow-sm hover:bg-black hover:text-white transition-colors"
+        >
+          View all
+          <span aria-hidden>→</span>
+        </Link>
       </div>
     </section>
   );
