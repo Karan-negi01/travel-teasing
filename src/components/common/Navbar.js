@@ -118,6 +118,9 @@ export default function Navbar() {
                 <Link href="/cities" className="text-sm font-semibold text-gray-600 hover:text-gray-900 py-2.5 px-2 rounded-lg hover:bg-gray-100/80 whitespace-nowrap transition-colors duration-200">
                   Cities
                 </Link>
+                <Link href="/blog" className="text-sm font-semibold text-gray-600 hover:text-gray-900 py-2.5 px-2 rounded-lg hover:bg-gray-100/80 whitespace-nowrap transition-colors duration-200">
+                  Blog
+                </Link>
               </div>
               <div className="flex items-center gap-2">
                 <Link
@@ -189,6 +192,9 @@ export default function Navbar() {
               </Link>
               <Link href="/cities" onClick={() => setIsMenuOpen(false)} className="block py-3.5 border-b border-gray-50 rounded-lg px-2 active:bg-gray-100 transition-colors">
                 Cities
+              </Link>
+              <Link href="/blog" onClick={() => setIsMenuOpen(false)} className="block py-3.5 border-b border-gray-50 rounded-lg px-2 active:bg-gray-100 transition-colors">
+                Blog
               </Link>
               <Link href="/ai-planner" onClick={() => setIsMenuOpen(false)} className="block py-3.5 border-b border-gray-50 rounded-lg px-2 active:bg-orange-50 transition-colors text-orange-700">
                 AI Planner

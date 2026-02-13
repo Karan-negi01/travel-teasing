@@ -81,6 +81,11 @@ export default function Footer() {
                   Browse Cities
                 </Link>
               </li>
+              <li>
+                <Link href="/blog" className="hover:text-orange-400 transition-colors text-sm">
+                  Blog
+                </Link>
+              </li>
             </ul>
           </div>
 

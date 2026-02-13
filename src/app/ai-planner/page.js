@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import Navbar from "@/components/common/Navbar";
+import Footer from "@/components/common/Footer";
 import ChatBubble from "@/components/ai-planner/ChatBubble";
 import OptionChips from "@/components/ai-planner/OptionChips";
 import CounterSelector from "@/components/ai-planner/CounterSelector";
@@ -391,6 +392,10 @@ export default function AIPlannerPage() {
           )}
           </div>
         </div>
+      </div>
+
+      <div className="relative z-10">
+        <Footer />
       </div>
     </div>
   );

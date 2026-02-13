@@ -62,18 +62,15 @@ export default function TripStyleStrip() {
               href={style.href}
               className={`group relative overflow-hidden rounded-2xl border bg-white/80 shadow-sm hover:shadow-xl transition-all duration-300 ${style.border}`}
             >
-              {/* Background image from Explore by mood cards */}
               <img
                 src={style.image}
                 alt={style.label}
                 className="absolute inset-0 h-full w-full object-cover"
               />
-              {/* Dark base overlay so white text is always readable */}
               <div
                 className="absolute inset-0 bg-black/55"
                 aria-hidden
               />
-              {/* Colored gradient tint */}
               <div
                 className={`absolute inset-0 bg-gradient-to-br ${style.tone} opacity-80 group-hover:opacity-100 transition-opacity`}
                 aria-hidden
@@ -82,9 +79,7 @@ export default function TripStyleStrip() {
                 <span className="inline-flex items-center rounded-full bg-white/10 border border-white/60 px-3 py-1 text-[11px] font-semibold text-white shadow-sm">
                   {style.pill}
                 </span>
-                <h3
-                  className="text-base sm:text-lg md:text-xl font-semibold text-white group-hover:translate-y-0.5 transition-transform"
-                >
+                <h3 className="text-base sm:text-lg md:text-xl font-semibold text-white group-hover:translate-y-0.5 transition-transform">
                   {style.label}
                 </h3>
                 <p className="text-xs sm:text-sm text-white/90 leading-relaxed line-clamp-3">
