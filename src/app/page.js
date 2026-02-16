@@ -4,7 +4,7 @@ import CharDhamSection from "@/components/home/CharDhamSection";
 import FeaturedCollections from "@/components/home/FeaturedCollections";
 // import MysticDestinationsTimeline from "@/components/home/MysticDestinationsTimeline";
 import JyotirlingaSection from "@/components/home/JyotirlingaSection";
-// import ExperienceStrip from "@/components/home/ExperienceStrip";
+
 import TreksSection from "@/components/home/TreksSection";
 import OffbeatSection from "@/components/home/OffbeatSection";
 import PlayfulStats from "@/components/home/PlayfulStats";
