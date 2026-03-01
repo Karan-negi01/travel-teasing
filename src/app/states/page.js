@@ -4,7 +4,8 @@ import PlanTripCTA from "@/components/common/PlanTripCTA";
 import FAQSection from "@/components/common/FAQSection";
 import InfoStrip from "@/components/common/InfoStrip";
 import Link from "next/link";
-import { states, getCitiesByState, getAllCities } from "@/data/locations";
+
+const API_BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
 export const metadata = {
   title: "Explore Indian States | TravelTeasing",
@@ -12,9 +13,20 @@ export const metadata = {
     "Browse Indian states for temples, treks, and off-beat escapes with curated city guides.",
 };
 
-export default function StatesPage() {
+async function fetchStates(includeCities = false) {
+  const url = `${API_BASE_URL}/api/states${includeCities ? "?includeCities=true" : ""}`;
+  const res = await fetch(url, { cache: "no-store" });
+  if (!res.ok) {
+    throw new Error("Failed to fetch states");
+  }
+  const json = await res.json();
+  return json.data || [];
+}
+
+export default async function StatesPage() {
+  const states = await fetchStates(true);
   const popularStates = states.filter((state) => state.popular);
-  const totalCities = getAllCities().length;
+  const totalCities = states.reduce((sum, state) => sum + (state.cities?.length || 0), 0);
   const themes = [
     { title: "Himalayan escapes", text: "Snowy peaks, treks, and quiet valleys." },
     { title: "Heritage heartlands", text: "Temples, forts, and timeless culture." },
@@ -43,9 +55,25 @@ export default function StatesPage() {
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_80%_at_20%_50%,_rgba(100,116,139,0.06),_transparent)]" />
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-16 sm:py-20 lg:py-24">
           <div className="max-w-2xl">
-            <div className="flex items-center gap-3 text-white/70 flex-wrap">
-              <span className="h-px w-8 bg-slate-400" />
-              <span className="text-[10px] sm:text-xs font-semibold uppercase tracking-[0.2em] sm:tracking-[0.25em]">Explore by state</span>
+            <div className="flex items-center justify-between gap-3 text-white/70 flex-wrap">
+              <div className="flex items-center gap-3 flex-wrap">
+                <span className="h-px w-8 bg-slate-400" />
+                <span className="text-[10px] sm:text-xs font-semibold uppercase tracking-[0.2em] sm:tracking-[0.25em]">
+                  Explore by state
+                </span>
+              </div>
+              <Link
+                href={`/ai-planner?plan=${encodeURIComponent(
+                  JSON.stringify({
+                    destination: "Across India",
+                    travelStyles: [],
+                  })
+                )}`}
+                className="inline-flex items-center gap-1 rounded-full border border-white/60 bg-white/10 px-3 py-1.5 text-[11px] font-semibold text-white hover:bg-white/20 hover:border-white transition-all"
+              >
+                <span aria-hidden>✨</span>
+                <span>Plan with Nomii</span>
+              </Link>
             </div>
             <h1 className="mt-4 sm:mt-5 text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-tight leading-[1.1]">
               States of India
@@ -122,15 +150,14 @@ export default function StatesPage() {
                 <div className="absolute bottom-3 left-3 right-3 text-white">
                   <p className="text-sm font-semibold drop-shadow">{state.name}</p>
                   <p className="text-xs text-white/90">
-                    {getCitiesByState(state.id).length} cities to explore
+                    {state.cities?.length || 0} cities to explore
                   </p>
                 </div>
               </div>
               <div className="p-4 sm:p-5 space-y-2">
                 <p className="text-sm text-gray-600 line-clamp-2">{state.description}</p>
                 <div className="flex items-center justify-between text-xs text-gray-600">
-                  <span>{getCitiesByState(state.id).length} cities</span>
-                  <span className="rounded-full bg-orange-50 px-2.5 py-1 font-semibold text-orange-700">State</span>
+                  <span>{state.cities?.length || 0} cities</span>
                 </div>
               </div>
             </Link>
@@ -159,14 +186,13 @@ export default function StatesPage() {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
                 <div className="absolute bottom-3 left-3 right-3 text-white">
                   <p className="text-sm font-semibold drop-shadow">{state.name}</p>
-                  <p className="text-xs text-white/90">{getCitiesByState(state.id).length} cities</p>
+                  <p className="text-xs text-white/90">{state.cities?.length || 0} cities</p>
                 </div>
               </div>
               <div className="p-4 sm:p-5 space-y-2">
                 <p className="text-sm text-gray-600 line-clamp-2">{state.description}</p>
                 <div className="flex items-center justify-between text-xs text-gray-600">
-                  <span>{getCitiesByState(state.id).length} cities</span>
-                  <span className="rounded-full bg-orange-50 px-2.5 py-1 font-semibold text-orange-700">State</span>
+                  <span>{state.cities?.length || 0} cities</span>
                 </div>
               </div>
             </Link>

@@ -72,10 +72,10 @@ export default function Banner() {
           </p>
           <div className="mt-6 sm:mt-8 flex flex-wrap gap-2 sm:gap-3">
             <Link
-              href="/temples"
+              href="/ai-planner"
               className="inline-flex items-center justify-center gap-2 rounded-lg bg-orange-500 px-4 sm:px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-orange-500/25 hover:bg-orange-600 transition-all min-h-[44px]"
             >
-              Explore temples
+              Plan with Nomii
               <span className="text-orange-200">→</span>
             </Link>
             <Link
@@ -83,6 +83,12 @@ export default function Banner() {
               className="inline-flex items-center justify-center rounded-lg border border-white/50 bg-white/5 px-4 sm:px-5 py-2.5 text-sm font-semibold text-white backdrop-blur-sm hover:bg-white/10 transition-all min-h-[44px]"
             >
               Search all
+            </Link>
+            <Link
+              href="/temples"
+              className="inline-flex items-center justify-center rounded-lg border border-white/40 bg-white/5 px-4 sm:px-5 py-2.5 text-sm font-semibold text-white backdrop-blur-sm hover:bg-white/15 transition-all min-h-[44px]"
+            >
+              Explore temples
             </Link>
           </div>
           <div className="mt-6 sm:mt-10 flex flex-wrap gap-2 sm:gap-4 text-[10px] sm:text-xs font-medium text-white/60 uppercase tracking-wider">

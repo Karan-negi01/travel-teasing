@@ -2,6 +2,7 @@
 
 import { stays } from "@/data/stays";
 import { useBooking } from "@/context/BookingContext";
+import SaveButton from "@/components/common/SaveButton";
 
 const featuredStays = stays.slice(0, 6);
 
@@ -28,6 +29,7 @@ export default function FeaturedStays() {
               className="group rounded-2xl border border-gray-200/80 bg-white overflow-hidden shadow-sm hover:shadow-xl hover:border-orange-200/60 transition-all duration-300"
             >
               <div className="relative h-56 sm:h-auto sm:aspect-[4/3] overflow-hidden">
+                <SaveButton id={stay.id} type="stays" variant="card" className="absolute top-3 right-3" />
                 <img
                   src={stay.image}
                   alt={stay.name}

@@ -3,8 +3,10 @@ import Footer from "@/components/common/Footer";
 import PlanTripCTA from "@/components/common/PlanTripCTA";
 import FAQSection from "@/components/common/FAQSection";
 import InfoStrip from "@/components/common/InfoStrip";
+import SaveButton from "@/components/common/SaveButton";
 import Link from "next/link";
-import { treks } from "@/data/treks";
+
+const API_BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
 export const metadata = {
   title: "Treks & Adventures in India | TravelTeasing",
@@ -27,7 +29,50 @@ const getDifficultyColor = (difficulty) => {
   return "bg-sky-500";
 };
 
-export default function TreksPage() {
+async function fetchTreks(filters) {
+  const params = new URLSearchParams();
+
+  if (filters?.difficulty) params.set("difficulty", filters.difficulty);
+  if (filters?.stateId) params.set("stateId", filters.stateId);
+  if (filters?.season) params.set("season", filters.season);
+
+  const query = params.toString();
+  const url = query ? `${API_BASE_URL}/api/treks?${query}` : `${API_BASE_URL}/api/treks`;
+
+  const res = await fetch(url, { cache: "no-store" });
+  if (!res.ok) {
+    throw new Error("Failed to fetch treks");
+  }
+  const json = await res.json();
+  return json.data || [];
+}
+
+function parseDays(duration = "") {
+  const match = String(duration).match(/(\d+)\s*day/i);
+  return match ? Number(match[1]) : null;
+}
+
+export default async function TreksPage({ searchParams }) {
+  const params = await searchParams;
+  const difficultyFilter = params?.difficulty || "";
+  const stateFilter = params?.stateId || "";
+  const seasonFilter = params?.season || "";
+  const maxDaysFilter = params?.maxDays || "";
+
+  const treks = await fetchTreks({
+    difficulty: difficultyFilter || undefined,
+    stateId: stateFilter || undefined,
+    season: seasonFilter || undefined,
+  });
+
+  const filteredTreks = treks.filter((t) => {
+    if (maxDaysFilter) {
+      const days = parseDays(t.duration);
+      if (days && days > Number(maxDaysFilter)) return false;
+    }
+    return true;
+  });
+
   const difficultyLevels = {
     easy: treks.filter((t) => t.difficulty.toLowerCase().includes("easy")),
     moderate: treks.filter(
@@ -54,9 +99,25 @@ export default function TreksPage() {
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_80%_at_20%_50%,_rgba(16,185,129,0.06),_transparent)]" />
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-16 sm:py-20 lg:py-24">
           <div className="max-w-2xl">
-            <div className="flex items-center gap-3 text-white/70 flex-wrap">
-              <span className="h-px w-8 bg-emerald-400" />
-              <span className="text-[10px] sm:text-xs font-semibold uppercase tracking-[0.2em] sm:tracking-[0.25em]">Adventure & Nature</span>
+            <div className="flex items-center justify-between gap-3 text-white/70 flex-wrap">
+              <div className="flex items-center gap-3 flex-wrap">
+                <span className="h-px w-8 bg-emerald-400" />
+                <span className="text-[10px] sm:text-xs font-semibold uppercase tracking-[0.2em] sm:tracking-[0.25em]">
+                  Adventure & Nature
+                </span>
+              </div>
+              <Link
+                href={`/ai-planner?plan=${encodeURIComponent(
+                  JSON.stringify({
+                    destination: "Himalayan treks",
+                    travelStyles: ["Treks & Adventure"],
+                  })
+                )}`}
+                className="inline-flex items-center gap-1 rounded-full border border-white/60 bg-white/10 px-3 py-1.5 text-[11px] font-semibold text-white hover:bg-white/20 hover:border-white transition-all"
+              >
+                <span aria-hidden>✨</span>
+                <span>Plan a trek with Nomii</span>
+              </Link>
             </div>
             <h1 className="mt-4 sm:mt-6 text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-tight leading-[1.1]">
               <span className="text-white/95">Treks</span>
@@ -164,6 +225,7 @@ export default function TreksPage() {
                 className="group block rounded-2xl overflow-hidden bg-white border border-gray-200/80 shadow-sm hover:shadow-lg hover:border-emerald-200/60 transition-all duration-300"
               >
                 <div className="relative h-56 sm:h-auto sm:aspect-[4/3] overflow-hidden">
+                  <SaveButton id={trek.id} type="treks" variant="card" className="absolute top-3 right-3" />
                   <img
                     src={trekImages[(index + 1) % trekImages.length]}
                     alt={trek.name}
@@ -182,7 +244,6 @@ export default function TreksPage() {
                   <p className="text-sm text-gray-600 line-clamp-2">{trek.description}</p>
                   <div className="flex items-center justify-between text-xs text-gray-600">
                     <span>{trek.difficulty}</span>
-                    <span className="rounded-full bg-emerald-50 px-2.5 py-1 font-semibold text-emerald-700">Trek</span>
                   </div>
                 </div>
               </Link>
@@ -201,14 +262,80 @@ export default function TreksPage() {
             Curated routes with altitude, seasons, and difficulty in one view.
           </p>
         </div>
+
+        {/* Filters */}
+        <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <form
+            method="GET"
+            className="flex flex-wrap gap-3 items-center text-xs sm:text-sm"
+          >
+            <select
+              name="difficulty"
+              defaultValue={difficultyFilter}
+              className="rounded-full border border-gray-200 bg-white px-3 py-2 text-xs sm:text-sm text-gray-700 shadow-sm hover:border-emerald-300 focus:outline-none focus:ring-2 focus:ring-emerald-400/30"
+            >
+              <option value="">All difficulty</option>
+              <option value="Easy">Easy</option>
+              <option value="Moderate">Moderate</option>
+              <option value="Difficult">Difficult</option>
+            </select>
+
+            <input
+              type="text"
+              name="stateId"
+              defaultValue={stateFilter}
+              placeholder="State id e.g. uttarakhand"
+              className="rounded-full border border-gray-200 bg-white px-3 py-2 text-xs sm:text-sm text-gray-700 shadow-sm min-w-[180px] placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-400/30 focus:border-emerald-300"
+            />
+
+            <input
+              type="text"
+              name="season"
+              defaultValue={seasonFilter}
+              placeholder="Month / season"
+              className="rounded-full border border-gray-200 bg-white px-3 py-2 text-xs sm:text-sm text-gray-700 shadow-sm min-w-[160px] placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-400/30 focus:border-emerald-300"
+            />
+
+            <input
+              type="number"
+              name="maxDays"
+              defaultValue={maxDaysFilter}
+              min="1"
+              placeholder="Max days"
+              className="w-24 rounded-full border border-gray-200 bg-white px-3 py-2 text-xs sm:text-sm text-gray-700 shadow-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-400/30 focus:border-emerald-300"
+            />
+
+            <button
+              type="submit"
+              className="rounded-full bg-emerald-500 px-4 py-2 text-xs sm:text-sm font-semibold text-white shadow-sm hover:bg-emerald-600 hover:shadow-md transition-all"
+            >
+              Apply filters
+            </button>
+
+            {(difficultyFilter || stateFilter || seasonFilter || maxDaysFilter) && (
+              <Link
+                href="/treks#all-treks"
+                className="text-xs sm:text-sm font-semibold text-gray-500 hover:text-gray-800"
+              >
+                Clear
+              </Link>
+            )}
+          </form>
+
+          <p className="text-xs sm:text-sm text-gray-500">
+            Showing <span className="font-semibold text-gray-800">{filteredTreks.length}</span> treks
+          </p>
+        </div>
+
         <div className="grid grid-cols-2 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-4 sm:gap-6">
-          {treks.map((trek, index) => (
+          {filteredTreks.map((trek, index) => (
             <Link
               key={trek.id}
               href={`/treks/${trek.id}`}
               className="group rounded-2xl overflow-hidden bg-white border border-gray-200/80 shadow-sm hover:shadow-lg hover:border-emerald-200/60 transition-all duration-300"
             >
               <div className="relative h-56 sm:h-auto sm:aspect-[16/10] overflow-hidden">
+                <SaveButton id={trek.id} type="treks" variant="card" className="absolute top-3 right-3" />
                 <img
                   src={trekImages[index % trekImages.length]}
                   alt={trek.name}
@@ -234,7 +361,6 @@ export default function TreksPage() {
                 <p className="text-sm text-gray-600 line-clamp-2">{trek.description}</p>
                 <div className="flex items-center justify-between text-xs text-gray-600">
                   <span>{trek.maxAltitude}</span>
-                  <span className="rounded-full bg-emerald-50 px-2.5 py-1 font-semibold text-emerald-700">Trek</span>
                 </div>
               </div>
             </Link>

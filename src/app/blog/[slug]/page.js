@@ -1,11 +1,21 @@
 import Link from "next/link";
 import Navbar from "@/components/common/Navbar";
 import Footer from "@/components/common/Footer";
-import { blogPosts } from "@/data/blog";
+
+const API_BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+
+async function fetchPostBySlug(slug) {
+  const res = await fetch(`${API_BASE_URL}/api/blog?slug=${encodeURIComponent(slug)}`, {
+    cache: "no-store",
+  });
+  if (!res.ok) return null;
+  const json = await res.json();
+  return json.data || null;
+}
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
-  const post = blogPosts.find((p) => p.slug === slug);
+  const post = await fetchPostBySlug(slug);
   if (!post) return { title: "Post | TravelTeasing" };
   return {
     title: `${post.title} | TravelTeasing Blog`,
@@ -20,7 +30,7 @@ function formatDate(dateStr) {
 
 export default async function BlogPostPage({ params }) {
   const { slug } = await params;
-  const post = blogPosts.find((p) => p.slug === slug);
+  const post = await fetchPostBySlug(slug);
 
   // Wider, but still focused for reading
   const containerClass =

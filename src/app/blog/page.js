@@ -1,7 +1,8 @@
 import Link from "next/link";
 import Navbar from "@/components/common/Navbar";
 import Footer from "@/components/common/Footer";
-import { blogPosts, blogCategories } from "@/data/blog";
+
+const API_BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
 export const metadata = {
   title: "Travel Blog | Stories, Guides & Tips | TravelTeasing",
@@ -21,7 +22,21 @@ function formatDate(dateStr) {
 const containerClass =
   "max-w-[94vw] sm:max-w-[92vw] xl:max-w-[1300px] 2xl:max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-10";
 
-export default function BlogPage() {
+async function fetchBlog() {
+  const res = await fetch(`${API_BASE_URL}/api/blog`, { cache: "no-store" });
+  if (!res.ok) {
+    throw new Error("Failed to fetch blog posts");
+  }
+  const json = await res.json();
+  return {
+    posts: json.data || [],
+    categories: json.categories || [],
+  };
+}
+
+export default async function BlogPage() {
+  const { posts: blogPosts, categories: blogCategories } = await fetchBlog();
+
   const featured = blogPosts.filter((p) => p.featured);
   const rest = blogPosts.filter((p) => !p.featured);
 

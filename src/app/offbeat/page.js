@@ -3,8 +3,10 @@ import Footer from "@/components/common/Footer";
 import PlanTripCTA from "@/components/common/PlanTripCTA";
 import FAQSection from "@/components/common/FAQSection";
 import InfoStrip from "@/components/common/InfoStrip";
+import SaveButton from "@/components/common/SaveButton";
 import Link from "next/link";
-import { offbeatPlaces } from "@/data/offbeat";
+
+const API_BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
 export const metadata = {
   title: "Off-beat Places & Hidden Gems in India | TravelTeasing",
@@ -20,7 +22,51 @@ const placeImages = [
   "https://images.unsplash.com/photo-1482192596544-9eb780fc7f66?q=80&w=2070&auto=format&fit=crop",
 ];
 
-export default function OffbeatPage() {
+async function fetchOffbeatPlaces(filters) {
+  const params = new URLSearchParams();
+
+  if (filters?.stateId) params.set("stateId", filters.stateId);
+  if (filters?.type) params.set("type", filters.type);
+
+  const query = params.toString();
+  const url = query ? `${API_BASE_URL}/api/offbeat?${query}` : `${API_BASE_URL}/api/offbeat`;
+
+  const res = await fetch(url, { cache: "no-store" });
+  if (!res.ok) {
+    throw new Error("Failed to fetch offbeat places");
+  }
+  const json = await res.json();
+  return json.data || [];
+}
+
+function parseBudget(avgCost = "") {
+  const match = String(avgCost).match(/([\d,]+)/g);
+  if (!match || !match.length) return null;
+  const nums = match.map((m) => Number(m.replace(/,/g, ""))).filter(Boolean);
+  if (!nums.length) return null;
+  return nums.reduce((a, b) => a + b, 0) / nums.length;
+}
+
+export default async function OffbeatPage({ searchParams }) {
+  const params = await searchParams;
+  const stateFilter = params?.stateId || "";
+  const typeFilter = params?.type || "";
+  const budgetBand = params?.budget || "";
+
+  const offbeatPlacesRaw = await fetchOffbeatPlaces({
+    stateId: stateFilter || undefined,
+    type: typeFilter || undefined,
+  });
+
+  const offbeatPlaces = offbeatPlacesRaw.filter((p) => {
+    if (!budgetBand) return true;
+    const cost = parseBudget(p.avgCost);
+    if (!cost) return true;
+    if (budgetBand === "low") return cost < 1500;
+    if (budgetBand === "mid") return cost >= 1500 && cost <= 3000;
+    if (budgetBand === "high") return cost > 3000;
+    return true;
+  });
   const featuredPlaces = offbeatPlaces.slice(0, 3);
 
   return (
@@ -38,9 +84,25 @@ export default function OffbeatPage() {
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_80%_at_20%_50%,_rgba(168,85,247,0.06),_transparent)]" />
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-16 sm:py-20 lg:py-24">
           <div className="max-w-2xl">
-            <div className="flex items-center gap-3 text-white/70 flex-wrap">
-              <span className="h-px w-8 bg-violet-400" />
-              <span className="text-[10px] sm:text-xs font-semibold uppercase tracking-[0.2em] sm:tracking-[0.25em]">Off-beat & Quiet Stays</span>
+            <div className="flex items-center justify-between gap-3 text-white/70 flex-wrap">
+              <div className="flex items-center gap-3 flex-wrap">
+                <span className="h-px w-8 bg-violet-400" />
+                <span className="text-[10px] sm:text-xs font-semibold uppercase tracking-[0.2em] sm:tracking-[0.25em]">
+                  Off-beat & Quiet Stays
+                </span>
+              </div>
+              <Link
+                href={`/ai-planner?plan=${encodeURIComponent(
+                  JSON.stringify({
+                    destination: "Off-beat escapes",
+                    travelStyles: ["Offbeat"],
+                  })
+                )}`}
+                className="inline-flex items-center gap-1 rounded-full border border-white/60 bg-white/10 px-3 py-1.5 text-[11px] font-semibold text-white hover:bg-white/20 hover:border-white transition-all"
+              >
+                <span aria-hidden>✨</span>
+                <span>Plan an off-beat trip</span>
+              </Link>
             </div>
             <h1 className="mt-4 sm:mt-6 text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-tight leading-[1.1]">
               <span className="text-white/95">Hidden</span>
@@ -138,6 +200,7 @@ export default function OffbeatPage() {
                 className="group block rounded-2xl overflow-hidden bg-white border border-gray-200/80 shadow-sm hover:shadow-lg hover:border-violet-200/60 transition-all duration-300"
               >
                 <div className="relative h-56 sm:h-auto sm:aspect-[4/3] overflow-hidden">
+                  <SaveButton id={place.id} type="offbeat" variant="card" className="absolute top-3 right-3" />
                   <img
                     src={placeImages[(index + 1) % placeImages.length]}
                     alt={place.name}
@@ -156,7 +219,6 @@ export default function OffbeatPage() {
                   <p className="text-sm text-gray-600 line-clamp-2">{place.description}</p>
                   <div className="flex items-center justify-between text-xs text-gray-600">
                     <span>{place.bestTime}</span>
-                    <span className="rounded-full bg-violet-50 px-2.5 py-1 font-semibold text-violet-700">Off-beat</span>
                   </div>
                 </div>
               </Link>
@@ -175,6 +237,62 @@ export default function OffbeatPage() {
             Lesser-known places with unforgettable stories.
           </p>
         </div>
+
+        {/* Filters */}
+        <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <form
+            method="GET"
+            className="flex flex-wrap gap-3 items-center text-xs sm:text-sm"
+          >
+            <input
+              type="text"
+              name="stateId"
+              defaultValue={stateFilter}
+              placeholder="State id e.g. himachal-pradesh"
+              className="rounded-full border border-gray-200 bg-white px-3 py-2 text-xs sm:text-sm text-gray-700 shadow-sm min-w-[190px] placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-violet-400/30 focus:border-violet-300"
+            />
+
+            <input
+              type="text"
+              name="type"
+              defaultValue={typeFilter}
+              placeholder="Type e.g. Village, Valley"
+              className="rounded-full border border-gray-200 bg-white px-3 py-2 text-xs sm:text-sm text-gray-700 shadow-sm min-w-[180px] placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-violet-400/30 focus:border-violet-300"
+            />
+
+            <select
+              name="budget"
+              defaultValue={budgetBand}
+              className="rounded-full border border-gray-200 bg-white px-3 py-2 text-xs sm:text-sm text-gray-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-violet-400/30 focus:border-violet-300"
+            >
+              <option value="">Any budget</option>
+              <option value="low">Below ₹1,500/day</option>
+              <option value="mid">₹1,500 – ₹3,000/day</option>
+              <option value="high">Above ₹3,000/day</option>
+            </select>
+
+            <button
+              type="submit"
+              className="rounded-full bg-violet-500 px-4 py-2 text-xs sm:text-sm font-semibold text-white shadow-sm hover:bg-violet-600 hover:shadow-md transition-all"
+            >
+              Apply filters
+            </button>
+
+            {(stateFilter || typeFilter || budgetBand) && (
+              <Link
+                href="/offbeat#all-places"
+                className="text-xs sm:text-sm font-semibold text-gray-500 hover:text-gray-800"
+              >
+                Clear
+              </Link>
+            )}
+          </form>
+
+          <p className="text-xs sm:text-sm text-gray-500">
+            Showing <span className="font-semibold text-gray-800">{offbeatPlaces.length}</span> places
+          </p>
+        </div>
+
         <div className="grid grid-cols-2 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-4 sm:gap-6">
           {offbeatPlaces.map((place, index) => (
             <Link
@@ -183,6 +301,7 @@ export default function OffbeatPage() {
               className="group rounded-2xl overflow-hidden bg-white border border-gray-200/80 shadow-sm hover:shadow-lg hover:border-violet-200/60 transition-all duration-300"
             >
               <div className="relative h-56 sm:h-auto sm:aspect-[16/10] overflow-hidden">
+                <SaveButton id={place.id} type="offbeat" variant="card" className="absolute top-3 right-3" />
                 <img
                   src={placeImages[index % placeImages.length]}
                   alt={place.name}
@@ -203,7 +322,6 @@ export default function OffbeatPage() {
                 <p className="text-sm text-gray-600 line-clamp-2">{place.description}</p>
                 <div className="flex items-center justify-between text-xs text-gray-600">
                   <span>Best: {place.bestTime}</span>
-                  <span className="rounded-full bg-violet-50 px-2.5 py-1 font-semibold text-violet-700">Off-beat</span>
                 </div>
               </div>
             </Link>

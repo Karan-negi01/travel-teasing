@@ -4,10 +4,12 @@ import PlanTripCTA from "@/components/common/PlanTripCTA";
 import FAQSection from "@/components/common/FAQSection";
 import InfoStrip from "@/components/common/InfoStrip";
 import StaysAndActivities from "@/components/common/StaysAndActivities";
+import SaveButton from "@/components/common/SaveButton";
+import Breadcrumbs from "@/components/common/Breadcrumbs";
 import Link from "next/link";
-import { getTrekById, getTreksByState, treks } from "@/data/treks";
-import { getStaysByState } from "@/data/stays";
 import { notFound } from "next/navigation";
+
+const API_BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
 const trekImages = [
   "https://images.unsplash.com/photo-1482192596544-9eb780fc7f66?q=80&w=2070&auto=format&fit=crop",
@@ -31,23 +33,84 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }) {
   const { id } = await params;
-  const trek = getTrekById(id);
-  if (!trek) return { title: "Trek Not Found | TravelTeasing" };
-  return {
-    title: `${trek.name} - ${trek.state} | TravelTeasing`,
-    description: trek.description,
-  };
+
+  try {
+    const base = process.env.NEXT_PUBLIC_SITE_URL || "https://travelteasing.com";
+    const res = await fetch(`${base}/api/treks?id=${encodeURIComponent(id)}`, {
+      cache: "no-store",
+    });
+    if (!res.ok) {
+      return { title: "Trek Not Found | TravelTeasing" };
+    }
+    const json = await res.json();
+    const trek = json.data;
+    if (!trek) return { title: "Trek Not Found | TravelTeasing" };
+
+    const canonical = `${base}/treks/${trek.id}`;
+
+    return {
+      title: `${trek.name} - ${trek.state} | TravelTeasing`,
+      description: trek.description,
+      alternates: {
+        canonical,
+      },
+      openGraph: {
+        title: `${trek.name} - ${trek.state} | TravelTeasing`,
+        description: trek.description,
+        url: canonical,
+        type: "article",
+        images: [
+          {
+            url: trek.image || "/og-image.jpg",
+            width: 1200,
+            height: 630,
+            alt: trek.name,
+          },
+        ],
+      },
+      twitter: {
+        card: "summary_large_image",
+        title: `${trek.name} - ${trek.state} | TravelTeasing`,
+        description: trek.description,
+        images: [trek.image || "/og-image.jpg"],
+      },
+    };
+  } catch {
+    return {
+      title: "Treks | TravelTeasing",
+      description: "Discover treks across India by difficulty, altitude and season.",
+    };
+  }
 }
 
 export default async function TrekDetailPage({ params }) {
   const { id } = await params;
-  const trek = getTrekById(id);
+  const trekRes = await fetch(`${API_BASE_URL}/api/treks?id=${encodeURIComponent(id)}`, {
+    cache: "no-store",
+  });
+  if (!trekRes.ok) notFound();
+  const trekJson = await trekRes.json();
+  const trek = trekJson.data;
   if (!trek) notFound();
 
-  const trekIndex = treks.findIndex((t) => t.id === trek.id);
-  const heroImage = trekImages[(trekIndex >= 0 ? trekIndex : 0) % trekImages.length];
-  const relatedTreks = getTreksByState(trek.stateId).filter((t) => t.id !== trek.id).slice(0, 3);
-  const nearbyStays = getStaysByState(trek.stateId).slice(0, 6);
+  const heroImage = trekImages[((trek.id || 1) - 1) % trekImages.length];
+
+  const [relatedTreksRes, staysRes] = await Promise.all([
+    fetch(`${API_BASE_URL}/api/treks?stateId=${encodeURIComponent(trek.stateId)}`, {
+      cache: "no-store",
+    }),
+    fetch(`${API_BASE_URL}/api/stays?stateId=${encodeURIComponent(trek.stateId)}`, {
+      cache: "no-store",
+    }),
+  ]);
+
+  const relatedTreksJson = relatedTreksRes.ok ? await relatedTreksRes.json() : { data: [] };
+  const staysJson = staysRes.ok ? await staysRes.json() : { data: [] };
+
+  const relatedTreks = (relatedTreksJson.data || [])
+    .filter((t) => t.id !== trek.id)
+    .slice(0, 3);
+  const nearbyStays = (staysJson.data || []).slice(0, 6);
 
   return (
     <div className="min-h-screen">
@@ -59,6 +122,14 @@ export default async function TrekDetailPage({ params }) {
         <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/60 to-black/30" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_80%_at_20%_50%,_rgba(16,185,129,0.06),_transparent)]" />
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-20">
+          <Breadcrumbs
+            items={[
+              { label: "Home", href: "/" },
+              { label: "Treks", href: "/treks" },
+              { label: trek.name },
+            ]}
+            className="mb-4"
+          />
           <div className="max-w-2xl">
             <div className="flex items-center gap-3 text-white/70">
               <span className="h-px w-8 bg-emerald-400" />
@@ -72,6 +143,21 @@ export default async function TrekDetailPage({ params }) {
             </h1>
             <p className="mt-3 text-lg text-white/85">{trek.state}</p>
             <p className="mt-1 text-sm text-white/70">{trek.duration} · {trek.distance}</p>
+            <div className="mt-4 flex flex-wrap items-center gap-3">
+              <SaveButton id={trek.id} type="treks" />
+              <Link
+                href={`/ai-planner?plan=${encodeURIComponent(
+                  JSON.stringify({
+                    destination: trek.state || trek.name,
+                    travelStyles: ["Treks & Adventure"],
+                  })
+                )}`}
+                className="inline-flex items-center gap-1 rounded-full border border-white/70 bg-white/10 px-3 py-1.5 text-xs font-semibold text-white hover:bg-white/20 hover:border-white transition-all"
+              >
+                <span aria-hidden>✨</span>
+                <span>Plan this trek with Nomii</span>
+              </Link>
+            </div>
           </div>
         </div>
       </section>
@@ -235,7 +321,7 @@ export default async function TrekDetailPage({ params }) {
                     >
                       <div className="relative h-14 w-20 rounded-lg overflow-hidden flex-shrink-0">
                         <img
-                          src={trekImages[(treks.findIndex((t) => t.id === related.id) + 1) % trekImages.length]}
+                          src={trekImages[((related.id || 1) + 1) % trekImages.length]}
                           alt={related.name}
                           className="h-full w-full object-cover group-hover:scale-105 transition-transform"
                         />

@@ -22,13 +22,13 @@ export default function OptionChips({ options, selected, onChange, multiple = tr
             key={opt}
             type="button"
             onClick={() => toggle(opt)}
-            className={`rounded-full border-2 px-5 py-3 text-sm font-semibold transition-all duration-200 backdrop-blur-sm flex items-center gap-2 active:scale-[0.98] ${
+            className={`rounded-full border-2 px-5 py-3 text-sm font-semibold transition-all duration-200 flex items-center gap-2 active:scale-[0.98] ${
               isSelected
-                ? "border-orange-400 bg-orange-400/25 text-orange-900 shadow-lg shadow-orange-400/20 ring-2 ring-orange-300/50"
-                : "border-white/60 bg-white/60 text-gray-700 hover:bg-white/80 hover:border-white/80 hover:shadow-md"
+                ? "border-violet-400 bg-violet-50 text-violet-800 shadow-md ring-2 ring-violet-200/60"
+                : "border-stone-200 bg-white text-stone-600 hover:bg-stone-50 hover:border-violet-200 hover:text-stone-800"
             }`}
           >
-            {isSelected && <span className="text-orange-600 font-bold" aria-hidden>✓</span>}
+            {isSelected && <span className="text-violet-500 font-bold" aria-hidden>✓</span>}
             {opt}
           </button>
         );

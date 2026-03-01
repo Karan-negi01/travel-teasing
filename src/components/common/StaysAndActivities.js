@@ -1,6 +1,7 @@
 "use client";
 
 import { useBooking } from "@/context/BookingContext";
+import SaveButton from "@/components/common/SaveButton";
 
 const toneStyles = {
   orange: { text: "text-orange-600", iconBg: "bg-orange-100", border: "border-orange-200" },
@@ -39,6 +40,7 @@ export default function StaysAndActivities({ title, location, tone = "orange", s
                 className="group rounded-2xl border border-gray-200/80 bg-white overflow-hidden shadow-sm hover:shadow-lg hover:border-gray-300 transition-all duration-300"
               >
                 <div className="relative h-56 sm:h-auto sm:aspect-[4/3] overflow-hidden">
+                  <SaveButton id={stay.id} type="stays" variant="card" className="absolute top-3 right-3" />
                   <img
                     src={stay.image}
                     alt={stay.name}

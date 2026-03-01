@@ -23,6 +23,71 @@ body {
   overflow-x: hidden;
 }
 
+/* User-friendly: visible focus for keyboard / a11y */
+:where(a, button, input, select, textarea):focus-visible {
+  outline: 2px solid #8b5cf6;
+  outline-offset: 2px;
+}
+
+/* Nice text selection */
+::selection {
+  background: rgba(139, 92, 246, 0.2);
+  color: inherit;
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Skip to main content - visible when focused */
+.skip-to-main {
+  position: absolute;
+  left: -9999px;
+  z-index: 999;
+  padding: 0.75rem 1.25rem;
+  background: #fff;
+  color: #171717;
+  font-weight: 600;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: left 0.2s ease, outline-offset 0.2s ease;
+}
+.skip-to-main:focus {
+  left: 1rem;
+  top: 1rem;
+  outline: 2px solid #8b5cf6;
+  outline-offset: 2px;
+}
+
+/* Consistent section container – use on content sections */
+.section-container {
+  width: 100%;
+  max-width: 80rem; /* 1280px, same as max-w-7xl */
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+@media (min-width: 640px) {
+  .section-container {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+@media (min-width: 1024px) {
+  .section-container {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
 /* Smooth scrolling + prevent horizontal overflow */
 html {
   scroll-behavior: smooth;
@@ -145,6 +210,54 @@ html {
 
 .animate-fade-in-up {
   animation: fade-in-up 1.2s ease-out;
+}
+
+/* AI Planner: step form enter */
+@keyframes planner-step-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-planner-step-in {
+  animation: planner-step-in 0.35s ease-out forwards;
+}
+
+/* AI Planner: result card enter */
+@keyframes planner-result-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.animate-planner-result-in {
+  animation: planner-result-in 0.45s ease-out forwards;
+}
+
+/* Chat bubble appear */
+@keyframes bubble-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-bubble-in {
+  animation: bubble-in 0.25s ease-out forwards;
 }
 
 .animate-float {

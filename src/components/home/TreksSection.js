@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { treks } from "@/data/treks";
+import SaveButton from "@/components/common/SaveButton";
 
 const trekImages = [
   "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=2070&auto=format&fit=crop",
@@ -33,6 +34,7 @@ export default function TreksSection() {
               className="group rounded-2xl overflow-hidden border border-gray-200/80 bg-white shadow-sm hover:shadow-lg hover:border-emerald-200/60 transition-all duration-300"
             >
               <div className="relative h-56 sm:h-auto sm:aspect-[4/3] overflow-hidden">
+                <SaveButton id={trek.id} type="treks" variant="card" className="absolute top-3 right-3" />
                 <img
                   src={trekImages[index % trekImages.length]}
                   alt={trek.name}

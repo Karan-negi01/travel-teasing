@@ -8,10 +8,9 @@ import Footer from "@/components/common/Footer";
 import PlanTripCTA from "@/components/common/PlanTripCTA";
 import FAQSection from "@/components/common/FAQSection";
 import InfoStrip from "@/components/common/InfoStrip";
+import EmptyState from "@/components/common/EmptyState";
+import SaveButton from "@/components/common/SaveButton";
 import Link from "next/link";
-import { allTemples } from "@/data/temples";
-import { treks } from "@/data/treks";
-import { offbeatPlaces } from "@/data/offbeat";
 
 function SearchContent() {
   const searchParams = useSearchParams();
@@ -27,41 +26,35 @@ function SearchContent() {
   ];
 
   useEffect(() => {
-    if (query) {
-      const searchTerm = query.toLowerCase();
-      
-      // Search temples
-      const templeResults = allTemples.filter(
-        (temple) =>
-          temple.name.toLowerCase().includes(searchTerm) ||
-          temple.state.toLowerCase().includes(searchTerm) ||
-          temple.city.toLowerCase().includes(searchTerm) ||
-          temple.description.toLowerCase().includes(searchTerm)
-      );
-
-      // Search treks
-      const trekResults = treks.filter(
-        (trek) =>
-          trek.name.toLowerCase().includes(searchTerm) ||
-          trek.state.toLowerCase().includes(searchTerm) ||
-          trek.description.toLowerCase().includes(searchTerm)
-      );
-
-      // Search off-beat places
-      const offbeatResults = offbeatPlaces.filter(
-        (place) =>
-          place.name.toLowerCase().includes(searchTerm) ||
-          place.state.toLowerCase().includes(searchTerm) ||
-          place.city.toLowerCase().includes(searchTerm) ||
-          place.description.toLowerCase().includes(searchTerm)
-      );
-
-      setResults({
-        temples: templeResults,
-        treks: trekResults,
-        offbeat: offbeatResults,
-      });
+    if (!query) {
+      setResults({ temples: [], treks: [], offbeat: [] });
+      return;
     }
+
+    let cancelled = false;
+
+    (async () => {
+      try {
+        const res = await fetch(`/api/search?q=${encodeURIComponent(query)}`);
+        if (!res.ok) return;
+        const json = await res.json();
+        if (!cancelled) {
+          setResults({
+            temples: json.temples || [],
+            treks: json.treks || [],
+            offbeat: json.offbeat || [],
+          });
+        }
+      } catch {
+        if (!cancelled) {
+          setResults({ temples: [], treks: [], offbeat: [] });
+        }
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+    };
   }, [query]);
 
   const totalResults =
@@ -165,36 +158,19 @@ function SearchContent() {
             </div>
           </section>
         ) : totalResults === 0 ? (
-          <div className="text-center py-14 rounded-2xl border border-gray-200 bg-white">
-            <svg
-              className="w-16 h-16 text-gray-300 mx-auto mb-4"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-            </svg>
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">No results for &quot;{query}&quot;</h2>
-            <p className="text-gray-600 mb-6 max-w-md mx-auto">
-              Try a different keyword — e.g. a state name, place name, or theme like &quot;pilgrimage&quot; or &quot;trek&quot;.
-            </p>
-            <div className="flex flex-wrap justify-center gap-3">
-              {suggestedSearches.slice(0, 5).map((term) => (
-                <Link
-                  key={term}
-                  href={`/search?q=${encodeURIComponent(term)}`}
-                  className="rounded-full border border-gray-200 bg-gray-50 px-4 py-2 text-sm font-medium text-gray-800 hover:bg-orange-50 hover:text-orange-700 transition-all"
-                >
-                  {term}
-                </Link>
-              ))}
-            </div>
-            <p className="mt-8 text-sm text-gray-500">
-              Or <Link href="/temples" className="font-semibold text-orange-600 hover:underline">browse temples</Link>,{" "}
-              <Link href="/treks" className="font-semibold text-emerald-600 hover:underline">treks</Link>, or{" "}
-              <Link href="/offbeat" className="font-semibold text-violet-600 hover:underline">off-beat places</Link>.
-            </p>
-          </div>
+          <EmptyState
+            title={`No results for "${query}"`}
+            description='Try a different keyword — e.g. a state name, place name, or theme like "pilgrimage" or "trek".'
+            suggestions={suggestedSearches.slice(0, 5).map((term) => ({
+              label: term,
+              href: `/search?q=${encodeURIComponent(term)}`,
+            }))}
+          >
+            Or{" "}
+            <Link href="/temples" className="font-semibold text-violet-600 hover:underline">browse temples</Link>,{" "}
+            <Link href="/treks" className="font-semibold text-violet-600 hover:underline">treks</Link>, or{" "}
+            <Link href="/offbeat" className="font-semibold text-violet-600 hover:underline">off-beat places</Link>.
+          </EmptyState>
         ) : (
           <div className="space-y-12">
             <p className="text-sm text-gray-500">
@@ -214,6 +190,7 @@ function SearchContent() {
                       className="bg-white rounded-2xl border border-gray-200 hover:shadow-xl transition-all overflow-hidden group"
                     >
                       <div className="relative h-56 sm:h-auto sm:aspect-[4/3] overflow-hidden">
+                        <SaveButton id={temple.id} type="temples" variant="card" className="absolute top-3 right-3" />
                         <img
                           src={imagePool[index % imagePool.length]}
                           alt={temple.name}
@@ -250,6 +227,7 @@ function SearchContent() {
                       className="bg-white rounded-2xl border border-gray-200 hover:shadow-xl transition-all overflow-hidden group"
                     >
                       <div className="relative h-56 sm:h-auto sm:aspect-[4/3] overflow-hidden">
+                        <SaveButton id={trek.id} type="treks" variant="card" className="absolute top-3 right-3" />
                         <img
                           src={imagePool[(index + 2) % imagePool.length]}
                           alt={trek.name}
@@ -284,6 +262,7 @@ function SearchContent() {
                       className="bg-white rounded-2xl border border-gray-200 hover:shadow-xl transition-all overflow-hidden group"
                     >
                       <div className="relative h-56 sm:h-auto sm:aspect-[4/3] overflow-hidden">
+                        <SaveButton id={place.id} type="offbeat" variant="card" className="absolute top-3 right-3" />
                         <img
                           src={imagePool[(index + 4) % imagePool.length]}
                           alt={place.name}

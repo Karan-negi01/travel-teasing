@@ -29,7 +29,24 @@ export const offbeatPlaces = [
     localCuisine: ["Israeli food", "Trout fish", "Momos", "Tibetan food"],
     nearbyPlaces: ["Tosh", "Malana", "Manikaran", "Chalal"],
     accommodation: "Budget hostels to riverside camps",
-    avgCost: "₹800-2000 per day"
+    avgCost: "₹800-2000 per day",
+    dayPlans: [
+      {
+        title: "Arrival, riverside walk & café hopping",
+        description:
+          "Arrive in Kasol by noon, check into your stay and freshen up. Start with a slow walk along the Parvati river, explore the main market, and spend the evening café hopping (Evergreen, Moon Dance, etc.) with a simple riverside sunset."
+      },
+      {
+        title: "Chalal / short trail + Manikaran",
+        description:
+          "After breakfast, take the easy forest trail to Chalal village for views over Parvati valley. Return by afternoon, grab lunch in Kasol and head to Manikaran Sahib for the hot springs and Gurudwara. Evening back in Kasol with bonfire or board games at your stay."
+      },
+      {
+        title: "Buffer morning & departure",
+        description:
+          "Keep the last morning easy for a short riverside walk, last-minute café stop or shopping. Check-out with enough buffer for your bus/cab back towards Bhuntar, Kullu or Manali."
+      }
+    ]
   },
   {
     id: 2,

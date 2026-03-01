@@ -4,10 +4,12 @@ import PlanTripCTA from "@/components/common/PlanTripCTA";
 import FAQSection from "@/components/common/FAQSection";
 import InfoStrip from "@/components/common/InfoStrip";
 import StaysAndActivities from "@/components/common/StaysAndActivities";
+import SaveButton from "@/components/common/SaveButton";
+import Breadcrumbs from "@/components/common/Breadcrumbs";
 import Link from "next/link";
-import { getOffbeatPlaceById, getOffbeatPlacesByState, offbeatPlaces } from "@/data/offbeat";
-import { getStaysNearDestination } from "@/data/stays";
 import { notFound } from "next/navigation";
+
+const API_BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
 const placeImages = [
   "https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=2070&auto=format&fit=crop",
@@ -24,23 +26,87 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }) {
   const { id } = await params;
-  const place = getOffbeatPlaceById(id);
-  if (!place) return { title: "Place Not Found | TravelTeasing" };
-  return {
-    title: `${place.name} - ${place.state} | TravelTeasing`,
-    description: place.description,
-  };
+  try {
+    const base = process.env.NEXT_PUBLIC_SITE_URL || "https://travelteasing.com";
+    const res = await fetch(`${base}/api/offbeat?id=${encodeURIComponent(id)}`, {
+      cache: "no-store",
+    });
+    if (!res.ok) {
+      return { title: "Place Not Found | TravelTeasing" };
+    }
+    const json = await res.json();
+    const place = json.data;
+    if (!place) return { title: "Place Not Found | TravelTeasing" };
+
+    const canonical = `${base}/offbeat/${place.id}`;
+
+    return {
+      title: `${place.name} - ${place.state} | TravelTeasing`,
+      description: place.description,
+      alternates: {
+        canonical,
+      },
+      openGraph: {
+        title: `${place.name} - ${place.state} | TravelTeasing`,
+        description: place.description,
+        url: canonical,
+        type: "article",
+        images: [
+          {
+            url: place.image || "/og-image.jpg",
+            width: 1200,
+            height: 630,
+            alt: place.name,
+          },
+        ],
+      },
+      twitter: {
+        card: "summary_large_image",
+        title: `${place.name} - ${place.state} | TravelTeasing`,
+        description: place.description,
+        images: [place.image || "/og-image.jpg"],
+      },
+    };
+  } catch {
+    return {
+      title: "Off-beat Places | TravelTeasing",
+      description: "Discover hidden villages, valleys and slow-travel stays across India.",
+    };
+  }
 }
 
 export default async function OffbeatDetailPage({ params }) {
   const { id } = await params;
-  const place = getOffbeatPlaceById(id);
+  const placeRes = await fetch(`${API_BASE_URL}/api/offbeat?id=${encodeURIComponent(id)}`, {
+    cache: "no-store",
+  });
+  if (!placeRes.ok) notFound();
+  const placeJson = await placeRes.json();
+  const place = placeJson.data;
   if (!place) notFound();
 
-  const placeIndex = offbeatPlaces.findIndex((p) => p.id === place.id);
+  const placeIndex = (place.id || 1) - 1;
   const heroImage = placeImages[(placeIndex >= 0 ? placeIndex : 0) % placeImages.length];
-  const relatedPlaces = getOffbeatPlacesByState(place.stateId).filter((p) => p.id !== place.id).slice(0, 3);
-  const nearbyStays = getStaysNearDestination(place.cityId, place.stateId, 6);
+
+  const [relatedRes, staysRes] = await Promise.all([
+    fetch(`${API_BASE_URL}/api/offbeat?stateId=${encodeURIComponent(place.stateId)}`, {
+      cache: "no-store",
+    }),
+    fetch(
+      `${API_BASE_URL}/api/stays?nearCityId=${encodeURIComponent(
+        place.cityId
+      )}&nearStateId=${encodeURIComponent(place.stateId)}&limit=6`,
+      { cache: "no-store" }
+    ),
+  ]);
+
+  const relatedJson = relatedRes.ok ? await relatedRes.json() : { data: [] };
+  const staysJson = staysRes.ok ? await staysRes.json() : { data: [] };
+
+  const relatedPlaces = (relatedJson.data || [])
+    .filter((p) => p.id !== place.id)
+    .slice(0, 3);
+  const nearbyStays = staysJson.data || [];
 
   return (
     <div className="min-h-screen">
@@ -52,6 +118,14 @@ export default async function OffbeatDetailPage({ params }) {
         <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/60 to-black/30" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_80%_at_20%_50%,_rgba(168,85,247,0.06),_transparent)]" />
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-20">
+          <Breadcrumbs
+            items={[
+              { label: "Home", href: "/" },
+              { label: "Off-beat", href: "/offbeat" },
+              { label: place.name },
+            ]}
+            className="mb-4"
+          />
           <div className="max-w-2xl">
             <div className="flex items-center gap-3 text-white/70">
               <span className="h-px w-8 bg-violet-400" />
@@ -64,6 +138,21 @@ export default async function OffbeatDetailPage({ params }) {
               {place.name}
             </h1>
             <p className="mt-3 text-lg text-white/85">{place.city}, {place.state}</p>
+            <div className="mt-4 flex flex-wrap items-center gap-3">
+              <SaveButton id={place.id} type="offbeat" />
+              <Link
+                href={`/ai-planner?plan=${encodeURIComponent(
+                  JSON.stringify({
+                    destination: `${place.city}, ${place.state}`,
+                    travelStyles: ["Offbeat"],
+                  })
+                )}`}
+                className="inline-flex items-center gap-1 rounded-full border border-white/70 bg-white/10 px-3 py-1.5 text-xs font-semibold text-white hover:bg-white/20 hover:border-white transition-all"
+              >
+                <span aria-hidden>✨</span>
+                <span>Plan this trip with Nomii</span>
+              </Link>
+            </div>
           </div>
         </div>
       </section>
@@ -262,7 +351,7 @@ export default async function OffbeatDetailPage({ params }) {
                     >
                       <div className="relative h-14 w-20 rounded-lg overflow-hidden flex-shrink-0">
                         <img
-                          src={placeImages[(offbeatPlaces.findIndex((p) => p.id === related.id) + 1) % placeImages.length]}
+                          src={placeImages[((related.id || 1) + 1) % placeImages.length]}
                           alt={related.name}
                           className="h-full w-full object-cover group-hover:scale-105 transition-transform"
                         />

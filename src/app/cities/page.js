@@ -4,7 +4,8 @@ import PlanTripCTA from "@/components/common/PlanTripCTA";
 import FAQSection from "@/components/common/FAQSection";
 import InfoStrip from "@/components/common/InfoStrip";
 import Link from "next/link";
-import { states, getAllCities, getStateById } from "@/data/locations";
+
+const API_BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
 export const metadata = {
   title: "Explore Indian Cities | TravelTeasing",
@@ -12,8 +13,73 @@ export const metadata = {
     "Browse curated cities for temples, treks, and off-beat experiences across India.",
 };
 
-export default function CitiesPage() {
-  const allCities = getAllCities();
+async function fetchStates() {
+  const res = await fetch(`${API_BASE_URL}/api/states`, { cache: "no-store" });
+  if (!res.ok) {
+    throw new Error("Failed to fetch states");
+  }
+  const json = await res.json();
+  return json.data || [];
+}
+
+async function fetchCities() {
+  const res = await fetch(`${API_BASE_URL}/api/cities`, { cache: "no-store" });
+  if (!res.ok) {
+    throw new Error("Failed to fetch cities");
+  }
+  const json = await res.json();
+  return json.data || [];
+}
+
+export default async function CitiesPage({ searchParams }) {
+  const params = await searchParams;
+  const [states, allCitiesRaw] = await Promise.all([fetchStates(), fetchCities()]);
+  const statesById = new Map(states.map((s) => [s.id, s]));
+  const stateFilter = params?.stateId || "";
+  const themeFilter = params?.theme || "";
+
+  const themedStates = {
+    spiritual: new Set([
+      "uttarakhand",
+      "uttar-pradesh",
+      "tamil-nadu",
+      "gujarat",
+      "maharashtra",
+      "andhra-pradesh",
+      "odisha",
+      "madhya-pradesh",
+    ]),
+    treks: new Set([
+      "uttarakhand",
+      "himachal-pradesh",
+      "sikkim",
+      "ladakh",
+      "west-bengal",
+    ]),
+    offbeat: new Set([
+      "himachal-pradesh",
+      "meghalaya",
+      "arunachal-pradesh",
+      "assam",
+      "nagaland",
+      "jammu-kashmir",
+      "karnataka",
+      "west-bengal",
+      "tamil-nadu",
+      "maharashtra",
+    ]),
+  };
+
+  let allCities = allCitiesRaw;
+
+  if (stateFilter) {
+    allCities = allCities.filter((city) => city.stateId === stateFilter);
+  }
+
+  if (themeFilter && themedStates[themeFilter]) {
+    const allowed = themedStates[themeFilter];
+    allCities = allCities.filter((city) => allowed.has(city.stateId));
+  }
   const cityStyles = [
     { title: "Spiritual hubs", text: "Temple towns and sacred ghats." },
     { title: "Mountain gateways", text: "Base camps for treks and trails." },
@@ -42,9 +108,25 @@ export default function CitiesPage() {
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_80%_at_20%_50%,_rgba(100,116,139,0.06),_transparent)]" />
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-16 sm:py-20 lg:py-24">
           <div className="max-w-2xl">
-            <div className="flex items-center gap-3 text-white/70 flex-wrap">
-              <span className="h-px w-8 bg-slate-400" />
-              <span className="text-[10px] sm:text-xs font-semibold uppercase tracking-[0.2em] sm:tracking-[0.25em]">Explore by city</span>
+            <div className="flex items-center justify-between gap-3 text-white/70 flex-wrap">
+              <div className="flex items-center gap-3 flex-wrap">
+                <span className="h-px w-8 bg-slate-400" />
+                <span className="text-[10px] sm:text-xs font-semibold uppercase tracking-[0.2em] sm:tracking-[0.25em]">
+                  Explore by city
+                </span>
+              </div>
+              <Link
+                href={`/ai-planner?plan=${encodeURIComponent(
+                  JSON.stringify({
+                    destination: "City + nearby nature",
+                    travelStyles: [],
+                  })
+                )}`}
+                className="inline-flex items-center gap-1 rounded-full border border-white/60 bg-white/10 px-3 py-1.5 text-[11px] font-semibold text-white hover:bg-white/20 hover:border-white transition-all"
+              >
+                <span aria-hidden>✨</span>
+                <span>Plan with Nomii</span>
+              </Link>
             </div>
             <h1 className="mt-4 sm:mt-5 text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-tight leading-[1.1]">
               Cities to discover
@@ -104,9 +186,75 @@ export default function CitiesPage() {
           </p>
         </div>
 
+        {/* Filters */}
+        <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <form
+            method="GET"
+            className="flex flex-wrap gap-3 items-center text-xs sm:text-sm"
+          >
+            <select
+              name="stateId"
+              defaultValue={stateFilter}
+              className="rounded-full border border-gray-200 bg-white px-3 py-2 text-xs sm:text-sm text-gray-700 shadow-sm min-w-[180px] focus:outline-none focus:ring-2 focus:ring-orange-400/30 focus:border-orange-300"
+            >
+              <option value="">All states</option>
+              {states.map((state) => (
+                <option key={state.id} value={state.id}>
+                  {state.name}
+                </option>
+              ))}
+            </select>
+
+            <input type="hidden" name="theme" value={themeFilter} />
+
+            <button
+              type="submit"
+              className="rounded-full bg-orange-500 px-4 py-2 text-xs sm:text-sm font-semibold text-white shadow-sm hover:bg-orange-600 hover:shadow-md transition-all"
+            >
+              Apply filters
+            </button>
+
+            {(stateFilter || themeFilter) && (
+              <Link
+                href="/cities"
+                className="text-xs sm:text-sm font-semibold text-gray-500 hover:text-gray-800"
+              >
+                Clear
+              </Link>
+            )}
+          </form>
+
+          <div className="flex flex-wrap gap-2 justify-start sm:justify-end">
+            {[
+              { key: "", label: "All styles" },
+              { key: "spiritual", label: "Spiritual hubs" },
+              { key: "treks", label: "Treks & gateways" },
+              { key: "offbeat", label: "Off-beat bases" },
+            ].map((theme) => (
+              <Link
+                key={theme.key || "all"}
+                href={
+                  theme.key
+                    ? `/cities?theme=${theme.key}${stateFilter ? `&stateId=${stateFilter}` : ""}`
+                    : stateFilter
+                    ? `/cities?stateId=${stateFilter}`
+                    : "/cities"
+                }
+                className={`rounded-full border px-3 py-1.5 text-xs sm:text-sm font-semibold transition-all ${
+                  themeFilter === theme.key
+                    ? "border-orange-400 bg-orange-50 text-orange-700"
+                    : "border-gray-200 bg-white text-gray-700 hover:border-orange-200 hover:bg-orange-50 hover:text-orange-700"
+                }`}
+              >
+                {theme.label}
+              </Link>
+            ))}
+          </div>
+        </div>
+
         <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
           {allCities.map((city, index) => {
-            const state = getStateById(city.stateId);
+            const state = statesById.get(city.stateId);
             return (
               <Link
                 key={city.id}
@@ -129,7 +277,6 @@ export default function CitiesPage() {
                   <p className="text-sm text-gray-600 line-clamp-2">Discover routes, stays, and local experiences.</p>
                   <div className="flex items-center justify-between text-xs text-gray-600">
                     <span>{state?.name}</span>
-                    <span className="rounded-full bg-orange-50 px-2.5 py-1 font-semibold text-orange-700">City</span>
                   </div>
                 </div>
               </Link>
