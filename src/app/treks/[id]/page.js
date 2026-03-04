@@ -8,6 +8,7 @@ import SaveButton from "@/components/common/SaveButton";
 import Breadcrumbs from "@/components/common/Breadcrumbs";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { treks } from "@/data/treks";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 

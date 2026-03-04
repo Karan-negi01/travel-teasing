@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import Navbar from "@/components/common/Navbar";
@@ -251,7 +251,7 @@ function ItineraryCard({ tripData, planData, planError }) {
   );
 }
 
-export default function AIPlannerPage() {
+function AIPlannerPageInner() {
   const [step, setStep] = useState(1);
   const [tripData, setTripData] = useState(initialTripData);
   const [messages, setMessages] = useState([
@@ -883,5 +883,19 @@ export default function AIPlannerPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function AIPlannerPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-violet-50 to-white">
+          <p className="text-violet-600 font-medium">Loading planner…</p>
+        </div>
+      }
+    >
+      <AIPlannerPageInner />
+    </Suspense>
   );
 }
