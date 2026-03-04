@@ -1,9 +1,21 @@
-import { Plus_Jakarta_Sans, Geist_Mono } from "next/font/google";
+import { Playfair_Display, DM_Sans, Caveat, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import BookingProviderWithModal from "@/components/common/BookingProviderWithModal";
 
-const plusJakarta = Plus_Jakarta_Sans({
+const playfair = Playfair_Display({
+  variable: "--font-display",
+  subsets: ["latin"],
+  display: "swap",
+});
+
+const dmSans = DM_Sans({
   variable: "--font-sans",
+  subsets: ["latin"],
+  display: "swap",
+});
+
+const caveat = Caveat({
+  variable: "--font-playful",
   subsets: ["latin"],
   display: "swap",
 });
@@ -57,7 +69,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`${plusJakarta.variable} ${geistMono.variable} font-sans antialiased min-h-screen`}
+        className={`${playfair.variable} ${dmSans.variable} ${caveat.variable} ${geistMono.variable} antialiased min-h-screen`}
       >
         <a href="#main-content" className="skip-to-main">
           Skip to main content
