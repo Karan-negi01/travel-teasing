@@ -2,7 +2,7 @@ import Navbar from "@/components/common/Navbar";
 import Banner from "@/components/common/Banner";
 import CharDhamSection from "@/components/home/CharDhamSection";
 import FeaturedCollections from "@/components/home/FeaturedCollections";
-// import MysticDestinationsTimeline from "@/components/home/MysticDestinationsTimeline";
+// import MysticDestinationsTimeline from "@/components/home/MysticDestinationsTimeline"
 import JyotirlingaSection from "@/components/home/JyotirlingaSection";
 
 import TreksSection from "@/components/home/TreksSection";
